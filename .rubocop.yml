@@ -1,0 +1,5 @@
+AllCops:
+  Exclude:
+    - '**/Guardfile'
+Metrics/LineLength:
+  Max: 127
