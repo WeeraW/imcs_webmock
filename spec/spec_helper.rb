@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'spork'
 require 'database_cleaner'
+require 'factory_girl_rails'
 
 Spork.prefork do
   ENV['RAILS_ENV'] ||= 'test'
