@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708031443) do
+ActiveRecord::Schema.define(version: 20160712051857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,5 +92,29 @@ ActiveRecord::Schema.define(version: 20160708031443) do
     t.index ["uid", "provider"], name: "index_staffs_on_uid_and_provider", unique: true, using: :btree
   end
 
+  create_table "supplier_contact_infos", force: :cascade do |t|
+    t.string   "contact_person"
+    t.string   "telephone_number"
+    t.string   "telephone_ext"
+    t.string   "mobile_number"
+    t.string   "fax_number"
+    t.string   "fax_ext"
+    t.integer  "supplier_supplier_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["supplier_supplier_id"], name: "index_supplier_contact_infos_on_supplier_supplier_id", using: :btree
+  end
+
+  create_table "supplier_suppliers", force: :cascade do |t|
+    t.string   "company_code"
+    t.string   "display_name"
+    t.string   "tax_id"
+    t.text     "address"
+    t.string   "postal_code"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   add_foreign_key "distributors", "staffs", column: "staff_creator_id"
+  add_foreign_key "supplier_contact_infos", "supplier_suppliers"
 end
