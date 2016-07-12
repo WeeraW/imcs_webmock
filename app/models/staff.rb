@@ -6,16 +6,16 @@ class Staff < ActiveRecord::Base
           :trackable,
           :validatable
 
-  has_many :distributors, dependent: :restrict_with_exception
+  before_save -> { skip_confirmation! }
+
+  has_many :created_distributors, class_name: 'Distributor', foreign_key: :staff_creator_id, dependent: :restrict_with_exception
 
   validates :first_name,
             :last_name,
-            :staff_account,
             presence: true
-  validates :email,
-            uniqueness: { case_sensitive: false }
+
   validates :employee_code,
             :staff_account,
-            uniqueness: true,
+            uniqueness: { case_sensitive: false },
             presence: true
 end

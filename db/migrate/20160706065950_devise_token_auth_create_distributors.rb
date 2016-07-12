@@ -35,7 +35,7 @@ class DeviseTokenAuthCreateDistributors < ActiveRecord::Migration[5.0]
 
       ## User Info
       t.string :distributor_code, null: false
-      t.string :distributor_referror_id
+      t.integer :distributor_referror_id
       t.string :first_name, null: false
       t.string :middle_name
       t.string :last_name, null: false

@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20160708031443) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.string   "distributor_code",                                     null: false
-    t.string   "distributor_referror_id"
+    t.integer  "distributor_referror_id"
     t.string   "first_name",                                           null: false
     t.string   "middle_name"
     t.string   "last_name",                                            null: false
@@ -51,12 +51,12 @@ ActiveRecord::Schema.define(version: 20160708031443) do
     t.json     "tokens"
     t.datetime "created_at",                                           null: false
     t.datetime "updated_at",                                           null: false
-    t.integer  "staffs_id"
+    t.integer  "staff_creator_id"
     t.index ["distributor_code"], name: "index_distributors_on_distributor_code", unique: true, using: :btree
     t.index ["email"], name: "index_distributors_on_email", unique: true, using: :btree
     t.index ["id", "distributor_referror_id"], name: "index_distributor_sponsor", unique: true, using: :btree
+    t.index ["id", "staff_creator_id"], name: "index_distributor_staff_creator", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_distributors_on_reset_password_token", unique: true, using: :btree
-    t.index ["staffs_id"], name: "index_distributors_on_staffs_id", using: :btree
     t.index ["uid", "provider"], name: "index_distributors_on_uid_and_provider", unique: true, using: :btree
   end
 
@@ -92,5 +92,5 @@ ActiveRecord::Schema.define(version: 20160708031443) do
     t.index ["uid", "provider"], name: "index_staffs_on_uid_and_provider", unique: true, using: :btree
   end
 
-  add_foreign_key "distributors", "staffs", column: "staffs_id"
+  add_foreign_key "distributors", "staffs", column: "staff_creator_id"
 end

@@ -5,7 +5,7 @@ RSpec.describe Distributor, :type => :model do
     subject { create(:distributor) }
     it { should validate_presence_of(:citizens_id) }
     it { should validate_uniqueness_of(:citizens_id).case_insensitive }
-    # it { should validate_length_of(:citizens_id).is_equal_to(10) }
+    it { should validate_length_of(:citizens_id).is_equal_to(13) }
   end
 
   describe '#first_name' do
@@ -26,6 +26,7 @@ RSpec.describe Distributor, :type => :model do
     it { should validate_presence_of(:distributor_code) }
     it { should validate_length_of(:distributor_code).is_equal_to(10) }
   end
+
   describe '#validate_thai_citizens_id' do
     it 'SHOULD valid' do
       record = create(:distributor, citizens_id: '1559900188261')
@@ -47,18 +48,51 @@ RSpec.describe Distributor, :type => :model do
     end
   end
 
-  describe '#generate_distributetor_code' do
+  describe '#generate_distributor_code' do
+    pending 'Nothing todo right now YaY!'
   end
 
-  describe '#thai_citizens_id_checksum' do
+  describe '#distributor_sponsor_at_depth' do
+    pending 'Not implemented yet.'
+    # context 'no sponsor' do
+    #   before(:all) do
+    #     DatabaseCleaner.clean_with :deletion
+    #   end
+    #
+    #   let(:distributor) { create(:distributor, distributor_referror: nil) }
+    #
+    #   it 'should get no referror at level 1' do
+    #     expect(distributor.sponsor_at_upper_level).to be_nil
+    #   end
+    #
+    #   it 'should get no referror at level 3' do
+    #     expect(distributor.sponsor_at_upper_level(3)).to be_nil
+    #   end
+    # end
   end
 
-  describe '#thai_citizens_id_to_parity_and_array_digits' do
-  end
+  describe '#Asscociation' do
+    describe '#distributor_referrees' do
+      context 'referree at level 1' do
+        let(:top_parent) { create(:distributor, citizens_id: '4040868013083', distributor_referror: nil) }
+        it 'should have parent distributor' do
+          child_l1_1 = create(:distributor, citizens_id: '7831843207010', distributor_code: 'd000000001', distributor_referror: top_parent)
+          expect(child_l1_1.distributor_referror.id).to eq(top_parent.id)
+        end
 
-  describe '#thai_convert_to_pairs_coefficient_and_digit' do
-  end
+        it 'should have many child distributor' do
+          create(:distributor, citizens_id: '7831843207010', distributor_code: 'd000000001', distributor_referror: top_parent)
+          create(:distributor, citizens_id: '4108613044478', distributor_code: 'd000000002', distributor_referror: top_parent)
+          create(:distributor, citizens_id: '8027852718511', distributor_code: 'd000000003', distributor_referror: top_parent)
+          create(:distributor, citizens_id: '7612785074141', distributor_code: 'd000000004', distributor_referror: top_parent)
+          create(:distributor, citizens_id: '3263463488232', distributor_code: 'd000000005', distributor_referror: top_parent)
+          expect(top_parent.distributor_referrees.count).to eq(5)
+        end
+      end
+    end
 
-  describe '#thai_citizens_id_digits_sum' do
+    describe '#staff' do
+      it { should belong_to :staff_creator }
+    end
   end
 end
