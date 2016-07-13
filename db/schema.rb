@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712051857) do
+ActiveRecord::Schema.define(version: 20160713022806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,26 @@ ActiveRecord::Schema.define(version: 20160712051857) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "warehouse_facilities", force: :cascade do |t|
+    t.string   "code",                       null: false
+    t.string   "display_name",               null: false
+    t.text     "address"
+    t.integer  "warehouse_facility_type_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["code"], name: "index_warehouse_facilities_on_code", unique: true, using: :btree
+    t.index ["warehouse_facility_type_id"], name: "index_warehouse_facilities_on_warehouse_facility_type_id", using: :btree
+  end
+
+  create_table "warehouse_facility_types", force: :cascade do |t|
+    t.string   "code",         null: false
+    t.string   "display_name", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["code"], name: "index_warehouse_facility_types_on_code", unique: true, using: :btree
+  end
+
   add_foreign_key "distributors", "staffs", column: "staff_creator_id"
   add_foreign_key "supplier_contact_infos", "supplier_suppliers"
+  add_foreign_key "warehouse_facilities", "warehouse_facility_types"
 end
