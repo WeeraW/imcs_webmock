@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713022806) do
+ActiveRecord::Schema.define(version: 20160713095308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,52 @@ ActiveRecord::Schema.define(version: 20160713022806) do
     t.index ["id", "staff_creator_id"], name: "index_distributor_staff_creator", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_distributors_on_reset_password_token", unique: true, using: :btree
     t.index ["uid", "provider"], name: "index_distributors_on_uid_and_provider", unique: true, using: :btree
+  end
+
+  create_table "inventory_countable_units", force: :cascade do |t|
+    t.string   "code"
+    t.string   "display_name"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "inventory_inventory_items", force: :cascade do |t|
+    t.string   "display_name",         null: false
+    t.string   "supplier_sku"
+    t.integer  "supplier_supplier_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["supplier_sku", "supplier_supplier_id"], name: "index_sku_by_supplier", using: :btree
+    t.index ["supplier_supplier_id"], name: "index_inventory_inventory_items_on_supplier_supplier_id", using: :btree
+  end
+
+  create_table "inventory_item_lot_stock_ins", force: :cascade do |t|
+    t.integer  "quantity",                                       null: false
+    t.integer  "inventory_item_lot_id"
+    t.decimal  "price_per_count",       precision: 19, scale: 4
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
+    t.index ["inventory_item_lot_id"], name: "index_inventory_item_lot_stock_ins_on_inventory_item_lot_id", using: :btree
+  end
+
+  create_table "inventory_item_lot_stock_outs", force: :cascade do |t|
+    t.integer  "quantity",              null: false
+    t.integer  "inventory_item_lot_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["inventory_item_lot_id"], name: "index_inventory_item_lot_stock_outs_on_inventory_item_lot_id", using: :btree
+  end
+
+  create_table "inventory_item_lots", force: :cascade do |t|
+    t.string   "lot_number"
+    t.date     "mfg_date"
+    t.date     "exp_date"
+    t.integer  "inventory_inventory_item_id"
+    t.integer  "warehouse_facility_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["inventory_inventory_item_id"], name: "index_inventory_item_lots_on_inventory_inventory_item_id", using: :btree
+    t.index ["warehouse_facility_id"], name: "index_inventory_item_lots_on_warehouse_facility_id", using: :btree
   end
 
   create_table "staffs", force: :cascade do |t|
@@ -135,6 +181,11 @@ ActiveRecord::Schema.define(version: 20160713022806) do
   end
 
   add_foreign_key "distributors", "staffs", column: "staff_creator_id"
+  add_foreign_key "inventory_inventory_items", "supplier_suppliers"
+  add_foreign_key "inventory_item_lot_stock_ins", "inventory_item_lots"
+  add_foreign_key "inventory_item_lot_stock_outs", "inventory_item_lots"
+  add_foreign_key "inventory_item_lots", "inventory_inventory_items"
+  add_foreign_key "inventory_item_lots", "warehouse_facilities"
   add_foreign_key "supplier_contact_infos", "supplier_suppliers"
   add_foreign_key "warehouse_facilities", "warehouse_facility_types"
 end
