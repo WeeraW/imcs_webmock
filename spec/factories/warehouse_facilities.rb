@@ -5,4 +5,10 @@ FactoryGirl.define do
     address 'TEST address'
     association :facility_type, factory: :warehouse_facility_type
   end
+
+  factory :default_facility, class: 'Warehouse::Facility' do
+    id 0
+    code 'UNIDENTIFIED'
+    display_name 'Cannot Identified'
+  end
 end
