@@ -29,5 +29,9 @@ RSpec.describe Supplier::Supplier, type: :model do
     describe '#contact_infos' do
       it { should have_many(:contact_infos).dependent(:restrict_with_exception) }
     end
+
+    describe '#supply_inventory_items' do
+      it { should have_many(:supply_inventory_items).class_name('Inventory::InventoryItem').with_foreign_key(:supplier_supplier_id) }
+    end
   end
 end
