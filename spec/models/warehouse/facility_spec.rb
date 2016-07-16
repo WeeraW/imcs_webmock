@@ -38,7 +38,6 @@ RSpec.describe Warehouse::Facility, type: :model do
       it { should belong_to(:facility_type) }
       it 'should have default facility type' do
         default = create(:default_facility_type)
-        puts default.inspect
         facility = create(:warehouse_facility, facility_type: nil)
         expect(facility.facility_type).to eq(default)
       end
