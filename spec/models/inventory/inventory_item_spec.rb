@@ -36,5 +36,14 @@ RSpec.describe Inventory::InventoryItem, type: :model do
     describe '#item_lots' do
       it { should have_many(:item_lots).class_name('Inventory::ItemLot').with_foreign_key(:inventory_inventory_item_id).dependent(:restrict_with_exception) }
     end
+
+    describe '#countable_unit' do
+      it do
+        countable_unit_record = create :inventory_countable_unit
+        item_record = create :inventory_inventory_item
+        act_as_countable_record = create :inventory_act_as_countable, countable: item_record, inventory_countable_unit: countable_unit_record
+        expect(item_record).to have_one(:count_unit).class_name('Inventory::CountableUnit').dependent(:destroy).through(:inventory_act_as_countable)
+      end
+    end
   end
 end

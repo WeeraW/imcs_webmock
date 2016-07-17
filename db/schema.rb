@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713095308) do
+ActiveRecord::Schema.define(version: 20160717100910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,16 @@ ActiveRecord::Schema.define(version: 20160713095308) do
     t.index ["id", "staff_creator_id"], name: "index_distributor_staff_creator", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_distributors_on_reset_password_token", unique: true, using: :btree
     t.index ["uid", "provider"], name: "index_distributors_on_uid_and_provider", unique: true, using: :btree
+  end
+
+  create_table "inventory_act_as_countables", force: :cascade do |t|
+    t.integer  "countable_id"
+    t.string   "countable_type"
+    t.integer  "inventory_countable_unit_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["countable_id", "countable_type"], name: "index_countable_unit_type_on_act_as_countable", using: :btree
+    t.index ["inventory_countable_unit_id"], name: "index_inventory_countable_units_on_act_as_countables", using: :btree
   end
 
   create_table "inventory_countable_units", force: :cascade do |t|
@@ -181,6 +191,7 @@ ActiveRecord::Schema.define(version: 20160713095308) do
   end
 
   add_foreign_key "distributors", "staffs", column: "staff_creator_id"
+  add_foreign_key "inventory_act_as_countables", "inventory_countable_units"
   add_foreign_key "inventory_inventory_items", "supplier_suppliers"
   add_foreign_key "inventory_item_lot_stock_ins", "inventory_item_lots"
   add_foreign_key "inventory_item_lot_stock_outs", "inventory_item_lots"
