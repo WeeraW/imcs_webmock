@@ -52,6 +52,7 @@ gem 'semantic-ui-sass'
 gem 'react-rails', '~> 1.8.0'
 gem 'lodash-rails'
 gem 'kaminari'
+gem 'wdm'
 group :test, :development do
   gem 'bullet'
   gem 'shoulda-matchers', '~> 3.1'
