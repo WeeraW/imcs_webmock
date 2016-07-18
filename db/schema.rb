@@ -66,8 +66,7 @@ ActiveRecord::Schema.define(version: 20160717100910) do
     t.integer  "inventory_countable_unit_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-    t.index ["countable_id", "countable_type"], name: "index_countable_unit_type_on_act_as_countable", using: :btree
-    t.index ["inventory_countable_unit_id"], name: "index_inventory_countable_units_on_act_as_countables", using: :btree
+    t.index ["countable_id", "countable_type", "inventory_countable_unit_id"], name: "index_countable_unit_type_on_act_as_countable", using: :btree
   end
 
   create_table "inventory_countable_units", force: :cascade do |t|

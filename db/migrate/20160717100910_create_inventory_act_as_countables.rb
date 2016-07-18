@@ -7,8 +7,7 @@ class CreateInventoryActAsCountables < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    add_index :inventory_act_as_countables, :inventory_countable_unit_id, name: :index_inventory_countable_units_on_act_as_countables
-    add_index :inventory_act_as_countables, [:countable_id, :countable_type], name: :index_countable_unit_type_on_act_as_countable
+    add_index :inventory_act_as_countables, [:countable_id, :countable_type, :inventory_countable_unit_id], name: :index_countable_unit_type_on_act_as_countable
     add_foreign_key :inventory_act_as_countables, :inventory_countable_units
   end
 end

@@ -38,11 +38,15 @@ RSpec.describe Inventory::InventoryItem, type: :model do
     end
 
     describe '#countable_unit' do
-      it do
-        countable_unit_record = create :inventory_countable_unit
-        item_record = create :inventory_inventory_item
-        act_as_countable_record = create :inventory_act_as_countable, countable: item_record, inventory_countable_unit: countable_unit_record
-        expect(item_record).to have_one(:count_unit).class_name('Inventory::CountableUnit').dependent(:destroy).through(:inventory_act_as_countable)
+      context 'when create new :inventory_inventory_item' do
+        before(:each) do
+          @countable_unit_record = build :inventory_countable_unit
+          @item_record = build :inventory_inventory_item, inventory_countable_unit: @countable_unit_record
+        end
+
+        it 'should has one :inventory_countable_unit' do
+          expect(@item_record.inventory_countable_unit).to eq(@countable_unit_record)
+        end
       end
     end
   end
