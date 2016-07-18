@@ -5,3 +5,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Warehouse::FacilityType.create! id: 0, code: 'UNIDENTIFIED', display_name: 'UNIDENTIFIED'
+Warehouse::Facility.create! id: 0, code: 'UNIDENTIFIED', display_name: 'UNIDENTIFIED'

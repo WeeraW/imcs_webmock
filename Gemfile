@@ -45,7 +45,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
 gem 'devise_token_auth', '~> 0.1.37'
 gem 'omniauth'
 gem 'semantic-ui-sass'
@@ -53,6 +52,8 @@ gem 'react-rails', '~> 1.8.0'
 gem 'lodash-rails'
 gem 'kaminari'
 group :test, :development do
+  gem 'wdm', platforms: [:mingw, :mswin, :x64_mingw]
+  gem 'bullet'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
