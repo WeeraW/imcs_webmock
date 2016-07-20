@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717100910) do
+ActiveRecord::Schema.define(version: 20160720063408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,43 @@ ActiveRecord::Schema.define(version: 20160717100910) do
     t.index ["warehouse_facility_id"], name: "index_inventory_item_lots_on_warehouse_facility_id", using: :btree
   end
 
+  create_table "product_contains", force: :cascade do |t|
+    t.integer  "inventory_inventory_item_id"
+    t.integer  "product_product_id"
+    t.integer  "quantity",                    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["inventory_inventory_item_id"], name: "index_product_contains_on_inventory_inventory_item_id", using: :btree
+    t.index ["product_product_id"], name: "index_product_contains_on_product_product_id", using: :btree
+  end
+
+  create_table "product_prices", force: :cascade do |t|
+    t.decimal  "price_th",           precision: 19, scale: 4, null: false
+    t.integer  "product_product_id"
+    t.integer  "staff_id"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.index ["product_product_id"], name: "index_product_prices_on_product_product_id", using: :btree
+    t.index ["staff_id"], name: "index_product_prices_on_staff_id", using: :btree
+  end
+
+  create_table "product_products", force: :cascade do |t|
+    t.string   "sku",                            null: false
+    t.string   "name_th",                        null: false
+    t.string   "name_en",                        null: false
+    t.text     "description_th"
+    t.text     "description_en"
+    t.string   "slug",                           null: false
+    t.integer  "staff_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "saleable",       default: false
+    t.index ["id", "staff_id"], name: "index_product_by_id_staff_id", using: :btree
+    t.index ["sku"], name: "index_product_by_sku", unique: true, using: :btree
+    t.index ["slug"], name: "index_product_by_slug", unique: true, using: :btree
+    t.index ["staff_id"], name: "index_product_products_on_staff_id", using: :btree
+  end
+
   create_table "staffs", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
     t.string   "uid",                    default: "",      null: false
@@ -196,6 +233,11 @@ ActiveRecord::Schema.define(version: 20160717100910) do
   add_foreign_key "inventory_item_lot_stock_outs", "inventory_item_lots"
   add_foreign_key "inventory_item_lots", "inventory_inventory_items"
   add_foreign_key "inventory_item_lots", "warehouse_facilities"
+  add_foreign_key "product_contains", "inventory_inventory_items"
+  add_foreign_key "product_contains", "product_products"
+  add_foreign_key "product_prices", "product_products"
+  add_foreign_key "product_prices", "staffs"
+  add_foreign_key "product_products", "staffs"
   add_foreign_key "supplier_contact_infos", "supplier_suppliers"
   add_foreign_key "warehouse_facilities", "warehouse_facility_types"
 end
