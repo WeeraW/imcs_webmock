@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720063408) do
+ActiveRecord::Schema.define(version: 20160721035141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,31 @@ ActiveRecord::Schema.define(version: 20160720063408) do
     t.datetime "updated_at",                  null: false
     t.index ["inventory_inventory_item_id"], name: "index_inventory_item_lots_on_inventory_inventory_item_id", using: :btree
     t.index ["warehouse_facility_id"], name: "index_inventory_item_lots_on_warehouse_facility_id", using: :btree
+  end
+
+  create_table "order_details", force: :cascade do |t|
+    t.integer  "quantity"
+    t.decimal  "price_per_count",    precision: 19, scale: 4
+    t.integer  "product_product_id"
+    t.integer  "order_order_id"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.index ["order_order_id"], name: "index_order_details_on_order_order_id", using: :btree
+    t.index ["product_product_id"], name: "index_order_details_on_product_product_id", using: :btree
+  end
+
+  create_table "order_orders", force: :cascade do |t|
+    t.string   "billing_id"
+    t.datetime "paid_full_date"
+    t.integer  "create_by_staff_id"
+    t.integer  "paid_approve_by_staff_id"
+    t.integer  "shipping_approve_by_staff_id"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.index ["billing_id"], name: "index_order_orders_on_billing_id", unique: true, using: :btree
+    t.index ["create_by_staff_id"], name: "index_order_orders_on_create_by_staff_id", using: :btree
+    t.index ["paid_approve_by_staff_id"], name: "index_order_orders_on_paid_approve_by_staff_id", using: :btree
+    t.index ["shipping_approve_by_staff_id"], name: "index_order_orders_on_shipping_approve_by_staff_id", using: :btree
   end
 
   create_table "product_contains", force: :cascade do |t|
@@ -233,6 +258,11 @@ ActiveRecord::Schema.define(version: 20160720063408) do
   add_foreign_key "inventory_item_lot_stock_outs", "inventory_item_lots"
   add_foreign_key "inventory_item_lots", "inventory_inventory_items"
   add_foreign_key "inventory_item_lots", "warehouse_facilities"
+  add_foreign_key "order_details", "order_orders"
+  add_foreign_key "order_details", "product_products"
+  add_foreign_key "order_orders", "staffs", column: "create_by_staff_id", name: "fk_rails_order_creator_staff"
+  add_foreign_key "order_orders", "staffs", column: "paid_approve_by_staff_id", name: "fk_rails_order_payment_approval_staff"
+  add_foreign_key "order_orders", "staffs", column: "shipping_approve_by_staff_id", name: "fk_rails_order_shipping_approval_staff"
   add_foreign_key "product_contains", "inventory_inventory_items"
   add_foreign_key "product_contains", "product_products"
   add_foreign_key "product_prices", "product_products"
