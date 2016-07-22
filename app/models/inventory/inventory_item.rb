@@ -14,6 +14,12 @@ class Inventory::InventoryItem < ApplicationRecord
       l.exp_date = exp_date
     end
     lot.save!
+    add_item_to_lot(lot, quantity, price)
+  end
+
+  private
+
+  def add_item_to_lot(lot, quantity, price)
     lot.instock_items.create! quantity: quantity, price_per_count: price
   end
 end
