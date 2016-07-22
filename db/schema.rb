@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721035141) do
+ActiveRecord::Schema.define(version: 20160721084931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,19 @@ ActiveRecord::Schema.define(version: 20160721035141) do
     t.index ["shipping_approve_by_staff_id"], name: "index_order_orders_on_shipping_approve_by_staff_id", using: :btree
   end
 
+  create_table "payment_details", force: :cascade do |t|
+    t.integer  "status",                                       default: 0
+    t.decimal  "pay_amount",          precision: 19, scale: 4
+    t.datetime "pay_datetime",                                             null: false
+    t.text     "note"
+    t.integer  "order_order_id"
+    t.integer  "approve_by_staff_id"
+    t.integer  "create_by_staff_id"
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
+    t.index ["order_order_id"], name: "index_payment_details_on_order_order_id", using: :btree
+  end
+
   create_table "product_contains", force: :cascade do |t|
     t.integer  "inventory_inventory_item_id"
     t.integer  "product_product_id"
@@ -263,6 +276,9 @@ ActiveRecord::Schema.define(version: 20160721035141) do
   add_foreign_key "order_orders", "staffs", column: "create_by_staff_id", name: "fk_rails_order_creator_staff"
   add_foreign_key "order_orders", "staffs", column: "paid_approve_by_staff_id", name: "fk_rails_order_payment_approval_staff"
   add_foreign_key "order_orders", "staffs", column: "shipping_approve_by_staff_id", name: "fk_rails_order_shipping_approval_staff"
+  add_foreign_key "payment_details", "order_orders"
+  add_foreign_key "payment_details", "staffs", column: "approve_by_staff_id", name: "fk_rails_payment_details_approval_staff"
+  add_foreign_key "payment_details", "staffs", column: "create_by_staff_id", name: "fk_rails_payment_details_creator_staff"
   add_foreign_key "product_contains", "inventory_inventory_items"
   add_foreign_key "product_contains", "product_products"
   add_foreign_key "product_prices", "product_products"
