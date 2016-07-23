@@ -22,5 +22,9 @@ RSpec.describe Order::Order, type: :model do
     describe '#shipping_approve_by' do
       it { should belong_to(:shipping_approve_by).class_name('Staff').with_foreign_key(:shipping_approve_by_staff_id) }
     end
+
+    describe '#shipping_address' do
+      it { should have_one(:shipping_address).class_name('Fullfillment::ShippingAddress').through(:act_as_shippingable) }
+    end
   end
 end
