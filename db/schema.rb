@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160721084931) do
+ActiveRecord::Schema.define(version: 20160722042944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,28 @@ ActiveRecord::Schema.define(version: 20160721084931) do
     t.index ["id", "staff_creator_id"], name: "index_distributor_staff_creator", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_distributors_on_reset_password_token", unique: true, using: :btree
     t.index ["uid", "provider"], name: "index_distributors_on_uid_and_provider", unique: true, using: :btree
+  end
+
+  create_table "fullfillment_act_as_shippingables", force: :cascade do |t|
+    t.integer  "fullfillment_shipping_address_id"
+    t.integer  "shippingable_id"
+    t.string   "shippingable_type"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.index ["fullfillment_shipping_address_id"], name: "index_fullfillment_shipping_address_id_on_act_as_shippingables", using: :btree
+    t.index ["shippingable_id", "shippingable_type"], name: "index_shippingable_on_act_as_shippingables", using: :btree
+  end
+
+  create_table "fullfillment_shipping_addresses", force: :cascade do |t|
+    t.string   "recipient_name"
+    t.string   "recipient_telephone_number"
+    t.text     "address"
+    t.string   "district"
+    t.string   "city"
+    t.string   "state"
+    t.string   "postal_code"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "inventory_act_as_countables", force: :cascade do |t|
@@ -265,6 +287,7 @@ ActiveRecord::Schema.define(version: 20160721084931) do
   end
 
   add_foreign_key "distributors", "staffs", column: "staff_creator_id"
+  add_foreign_key "fullfillment_act_as_shippingables", "fullfillment_shipping_addresses", name: "fk_rails_act_as_shippingables_shipping_address"
   add_foreign_key "inventory_act_as_countables", "inventory_countable_units"
   add_foreign_key "inventory_inventory_items", "supplier_suppliers"
   add_foreign_key "inventory_item_lot_stock_ins", "inventory_item_lots"
