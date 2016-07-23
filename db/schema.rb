@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722042944) do
+ActiveRecord::Schema.define(version: 20160723040057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "customer_customers", force: :cascade do |t|
+    t.string   "first_name",       null: false
+    t.string   "last_name",        null: false
+    t.string   "nickname"
+    t.string   "telephone_number"
+    t.string   "mobile_number"
+    t.integer  "staff_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["staff_id"], name: "index_customer_customers_on_staff_id", using: :btree
+  end
 
   create_table "distributors", force: :cascade do |t|
     t.string   "provider",                           default: "email", null: false
@@ -286,6 +298,7 @@ ActiveRecord::Schema.define(version: 20160722042944) do
     t.index ["code"], name: "index_warehouse_facility_types_on_code", unique: true, using: :btree
   end
 
+  add_foreign_key "customer_customers", "staffs"
   add_foreign_key "distributors", "staffs", column: "staff_creator_id"
   add_foreign_key "fullfillment_act_as_shippingables", "fullfillment_shipping_addresses", name: "fk_rails_act_as_shippingables_shipping_address"
   add_foreign_key "inventory_act_as_countables", "inventory_countable_units"
