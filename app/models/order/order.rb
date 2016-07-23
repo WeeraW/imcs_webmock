@@ -1,8 +1,8 @@
 class Order::Order < ApplicationRecord
+  include Shippingable
   belongs_to :create_by, class_name: 'Staff', foreign_key: :create_by_staff_id
   belongs_to :paid_approve_by, class_name: 'Staff', foreign_key: :paid_approve_by_staff_id
   belongs_to :shipping_approve_by, class_name: 'Staff', foreign_key: :shipping_approve_by_staff_id
-
   validates :billing_id,
             presence: true,
             uniqueness: {
