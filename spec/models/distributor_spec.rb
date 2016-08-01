@@ -54,27 +54,13 @@ RSpec.describe Distributor, :type => :model do
 
   describe '#distributor_sponsor_at_depth' do
     pending 'Not implemented yet.'
-    # context 'no sponsor' do
-    #   before(:all) do
-    #     DatabaseCleaner.clean_with :deletion
-    #   end
-    #
-    #   let(:distributor) { create(:distributor, distributor_referror: nil) }
-    #
-    #   it 'should get no referror at level 1' do
-    #     expect(distributor.sponsor_at_upper_level).to be_nil
-    #   end
-    #
-    #   it 'should get no referror at level 3' do
-    #     expect(distributor.sponsor_at_upper_level(3)).to be_nil
-    #   end
-    # end
   end
 
   describe '#Asscociation' do
     describe '#distributor_referrees' do
       context 'referree at level 1' do
-        let(:top_parent) { create(:distributor, citizens_id: '4040868013083', distributor_referror: nil) }
+        let(:staff_creator) { build :staff }
+        let(:top_parent) { create(:distributor, citizens_id: '4040868013083', distributor_referror: nil, staff_creator: staff_creator) }
         it 'should have parent distributor' do
           child_l1_1 = create(:distributor, citizens_id: '7831843207010', distributor_code: 'd000000001', distributor_referror: top_parent)
           expect(child_l1_1.distributor_referror.id).to eq(top_parent.id)

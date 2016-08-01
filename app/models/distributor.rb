@@ -1,5 +1,7 @@
 class Distributor < ActiveRecord::Base
-  include DeviseTokenAuth::Concerns::User
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # include DeviseTokenAuth::Concerns::User
   include Validator::CitizensId::Th
   # Include default devise modules. , :omniauthable :rememberable :confirmable :registerable, :recoverable,
   devise  :database_authenticatable,
@@ -7,10 +9,10 @@ class Distributor < ActiveRecord::Base
           :validatable,
           authentication_keys: [:distributor_code]
 
-  before_save -> { skip_confirmation! }
+  # before_save -> { skip_confirmation! }
   before_save :generate_distributor_code, on: :create
   belongs_to :staff_creator, class_name: 'Staff', foreign_key: :staff_creator_id
-  belongs_to :distributor_referror, class_name: 'Distributor', foreign_key: 'distributor_referror_id'
+  belongs_to :distributor_referror, class_name: 'Distributor', foreign_key: 'distributor_referror_id', optional: true
 
   validates :distributor_code,
             length: { is: 10 },

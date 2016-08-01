@@ -2,8 +2,8 @@ class DeviseTokenAuthCreateStaffs < ActiveRecord::Migration[5.0]
   def change
     create_table(:staffs) do |t|
       ## Required
-      t.string :provider, null: false, default: 'email'
-      t.string :uid, null: false, default: ''
+      # t.string :provider, null: false, default: 'email'
+      # t.string :uid, null: false, default: ''
 
       ## Database authenticatable
       t.string :encrypted_password, null: false, default: ''
@@ -49,7 +49,7 @@ class DeviseTokenAuthCreateStaffs < ActiveRecord::Migration[5.0]
     add_index :staffs, :employee_code, unique: true
     add_index :staffs, :staff_account, unique: true
     add_index :staffs, :email, unique: true
-    add_index :staffs, [:uid, :provider], unique: true
+    # add_index :staffs, [:uid, :provider], unique: true
     add_index :staffs, :reset_password_token, unique: true
     # add_index :staffs, :confirmation_token,   :unique => true
     # add_index :staffs, :unlock_token,         :unique => true

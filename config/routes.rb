@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'Distributor', at: 'member'
-  mount_devise_token_auth_for 'Staff', at: 'office'
+  devise_for :distributors
+  devise_for :staffs
   as :staff do
     # Define routes for Staff within this block.
   end

@@ -2,8 +2,8 @@ class DeviseTokenAuthCreateDistributors < ActiveRecord::Migration[5.0]
   def change
     create_table(:distributors) do |t|
       ## Required
-      t.string :provider, null: false, default: 'email'
-      t.string :uid, null: false, default: ''
+      # t.string :provider, null: false, default: 'email'
+      # t.string :uid, null: false, default: ''
 
       ## Database authenticatable
       t.string :encrypted_password, null: false, default: ''
@@ -61,7 +61,7 @@ class DeviseTokenAuthCreateDistributors < ActiveRecord::Migration[5.0]
     add_index :distributors, [:id, :distributor_referror_id], unique: true, name: :index_distributor_sponsor
     add_index :distributors, :distributor_code, unique: true
     add_index :distributors, :email, unique: true
-    add_index :distributors, [:uid, :provider],     unique: true
+    # add_index :distributors, [:uid, :provider],     unique: true
     add_index :distributors, :reset_password_token, unique: true
     # add_index :distributors, :confirmation_token,   :unique => true
     # add_index :distributors, :unlock_token,         :unique => true

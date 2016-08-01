@@ -8,11 +8,12 @@ FactoryGirl.define do
     sequence(:nickname) { |n| "Testy#{n}" }
     citizens_id '4040868013083'
     date_of_birth 18.year.ago
-    distributor_referror nil
     middle_name 'T.'
     last_name 'testlastname'
     password 'test1234'
     state 'Test State'
     postal_code '12120'
+    distributor_referror nil
+    association :staff_creator, factory: :staff
   end
 end
