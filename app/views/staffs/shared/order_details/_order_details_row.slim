@@ -1,0 +1,11 @@
+tr
+  td
+    = detail.product.sku
+  td
+    = detail.product.name_th
+  td
+    = detail.quantity
+  td
+    = detail.price_per_count.to_s(:rounded, precision: 2)
+  td
+    = (detail.quantity * detail.price_per_count).to_s(:rounded, precision: 2)

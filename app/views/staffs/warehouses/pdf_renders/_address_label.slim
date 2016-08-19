@@ -1,0 +1,16 @@
+.pdf-recipient-label
+  strong ที่อยู่ผู้รับ
+  br
+  span #{ order.shipping_address.recipient_name }
+  br
+  span>
+    = order.shipping_address.address
+  br
+  span> ต. #{ order.shipping_address.district }
+  span> อ. #{ order.shipping_address.city }
+  span> จ. #{ order.shipping_address.state }
+  br
+  span> #{ order.shipping_address.postal_code }
+  span> โทร: #{ order.shipping_address.recipient_telephone_number }
+  br
+  span> บิลหมายเลข: #{ order.billing_id }

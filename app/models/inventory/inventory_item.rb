@@ -3,6 +3,7 @@ class Inventory::InventoryItem < ApplicationRecord
   has_many :item_lots, class_name: 'Inventory::ItemLot', foreign_key: :inventory_inventory_item_id, dependent: :restrict_with_exception
   has_one :inventory_act_as_countable, class_name: 'Inventory::ActAsCountable', as: :countable
   has_one :inventory_countable_unit, through: :inventory_act_as_countable
+  has_many :product_contains, class_name: 'Product::Contain', foreign_key: :inventory_inventory_item_id
 
   validates :display_name,
             presence: true
@@ -15,6 +16,14 @@ class Inventory::InventoryItem < ApplicationRecord
     end
     lot.save!
     add_item_to_lot(lot, quantity, price)
+  end
+
+  def available
+    item_lots.inject(0) { |sum, e| sum + e.available }
+  end
+
+  def oldest_lot
+    item_lots.min_by(&:life_span)
   end
 
   private

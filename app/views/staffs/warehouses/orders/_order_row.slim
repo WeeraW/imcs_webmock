@@ -1,0 +1,21 @@
+tr
+  td
+    = check_box_tag "order_ids[]", order.id, nil,class: 'selected_order'
+  td
+    .reveal data-reveal=true id=("#{order.billing_id}")
+      == render 'staffs/shared/order_details/order_details_table', details: order.order_details
+      == render 'staffs/shared/shipping_addresses/address_detail', address: order.shipping_address
+    a data-open=("#{order.billing_id}")
+      = order.billing_id
+  td
+    = order.shipping_address.recipient_name
+  td
+    = order.shipping_address.freight_tracking_code || 'ยังไม่ระบุ'
+  td
+    = "#{order.create_by.first_name} #{order.create_by.last_name}"
+  td
+    = "#{order.paid_approve_by.first_name} #{order.paid_approve_by.last_name}"
+  td
+    .reveal data-reveal=true id=("order_form_tracking_code#{order.id}")
+      = render 'staffs/shared/shipping_addresses/tracking_code_form', shipping_address: order.shipping_address, action_path: staffs_warehouses_shipping_address_path(order.shipping_address) ,method: 'put'
+    a> data-open=("order_form_tracking_code#{order.id}") [กรอก Tracking Code]

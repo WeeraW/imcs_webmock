@@ -1,14 +1,39 @@
 class Order::Order < ApplicationRecord
+  attr_accessor :selected
+
   include Shippingable
   belongs_to :create_by, class_name: 'Staff', foreign_key: :create_by_staff_id
-  belongs_to :paid_approve_by, class_name: 'Staff', foreign_key: :paid_approve_by_staff_id
-  belongs_to :shipping_approve_by, class_name: 'Staff', foreign_key: :shipping_approve_by_staff_id
+  belongs_to :paid_approve_by, class_name: 'Staff', foreign_key: :paid_approve_by_staff_id, optional: true
+  belongs_to :shipping_approve_by, class_name: 'Staff', foreign_key: :shipping_approve_by_staff_id, optional: true
+  has_many :order_details, class_name: 'Order::Detail', foreign_key: :order_order_id
+  has_many :payment_details, class_name: 'Payment::Detail', foreign_key: :order_order_id
+
+  scope :paid_full_orders, -> { where ['paid_approve_by_staff_id IS NOT ? AND shipping_approve_by_staff_id IS ?', nil, nil] }
+
+  scope :today_orders, -> { where(created_at: DateTime.now.beginning_of_day..DateTime.now.end_of_day) }
+
+  accepts_nested_attributes_for :order_details
+
+  before_validation :generate_billing_id
+
   validates :billing_id,
             presence: true,
             uniqueness: {
               case_sensitive: false
             }
-  validates :create_by_staff_id,
-            presence: :create_by_staff_id,
-            on: :create
+
+  def total_price
+    order_details.inject(0) { |a, e| a + (e.price_per_count * e.quantity) }
+  end
+
+  def total_paid_reconciled
+    payment_details.sum(:pay_amount_reconciled)
+  end
+
+  private
+
+  def generate_billing_id
+    return if persisted?
+    self.billing_id = "C#{Date.today.strftime('%Y%m%d')}#{'0' * (5 - self.class.today_orders.count.to_s.length)}#{self.class.today_orders.count + 1}"
+  end
 end

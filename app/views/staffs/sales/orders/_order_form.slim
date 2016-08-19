@@ -1,0 +1,12 @@
+= simple_form_for order, url: action_path, method: method do |order_form|
+  .callout
+    #order_details
+      = order_form.simple_fields_for :order_details do |detail|
+        == render 'order_detail_fields', f: detail
+      = link_to_add_association 'เพิ่มสินค้า', order_form, :order_details
+
+    .callout
+      h6 ที่อยู่สำหรับจัดส่ง
+      = order_form.simple_fields_for :shipping_address do |address|
+        = render 'staffs/shared/shipping_address_form', f: address
+    = order_form.submit

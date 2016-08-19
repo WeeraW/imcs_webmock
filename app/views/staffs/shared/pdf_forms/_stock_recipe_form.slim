@@ -1,0 +1,53 @@
+.pdf-stock-recipe-form
+  h4 บริษัท คอร์ เคมาตีส จำกัด
+  p
+    span เลขที่ 26/14 หมู่ 11 ตำบลคลองหนึ่ง อำเภอคลองหลวง จังหวัดปทุมธานี 12120
+    br
+    span 26/14 Moo 11, Khlong Nueng, Khlong Luang Pathumthanee 12120 Thailand
+    br
+    span โทร. 02-9081205, 02-9081095 แฟกซ์. 02-908-1257
+    br
+    span เลขประจำตัวผู้เสียภาษี: 0375550000013
+  p
+    strong> ผู้รับ
+    span #{ order.shipping_address.recipient_name }
+    br
+    span> #{ order.shipping_address.address }
+    br
+    span> ตำบล #{ order.shipping_address.district }
+    span> อำเภอ #{ order.shipping_address.city }
+    span> จังหวัด #{ order.shipping_address.state }
+    br
+    span #{ order.shipping_address.postal_code }
+    br
+    span> โทร. #{ order.shipping_address.recipient_telephone_number }
+  h3.paper-title ใบเสร็จรับเงิน
+  table
+    thead
+      th รหัสสินค้า
+      th ชื่อสินค้า
+      th ราคาต่อหน่วย
+      th จำนวน
+      th จำนวนเงิน
+    tbody
+      - order.order_details.each do |order_detail|
+        tr
+          td.number
+            = order_detail.product.sku
+          td
+            = order_detail.product.name_th
+          td.number
+            = order_detail.price_per_count.to_s(:currency, locale: :th)
+          td.number
+            = order_detail.quantity
+          td.number
+            = (order_detail.price_per_count * order_detail.quantity).to_s(:currency, locale: :th)
+      tr
+        td colspan=4 ยอดรวมทั้งหมด
+        td
+          = order.total_price.to_s(:currency, locale: :th)
+  p
+    strong> ผู้รับชำระ:
+    span> #{ order.paid_approve_by.first_name } #{ order.paid_approve_by.last_name }
+    strong> จัดส่งสินค้าโดย:
+    span> #{ order.shipping_approve_by.try(:first_name) } #{ order.shipping_approve_by.try(:last_name) }

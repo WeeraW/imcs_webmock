@@ -1,0 +1,18 @@
+= link_to 'สร้างซัพพลายเออร์ใหม่', new_staffs_warehouses_supplier_path
+.callout
+  table
+    thead
+      th #
+      th Code
+      th ชื่อบริษัท
+      th Tax ID
+      th รหัสไปรษณีย์
+      th Operations
+    tbody
+      - if @suppliers.any?
+        - @suppliers.each do |supplier|
+          = render 'supplier_row', supplier: supplier
+      - else
+        tr
+          td colspan="5"
+            h5 ไม่มีข้อมูล

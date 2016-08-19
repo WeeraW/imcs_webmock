@@ -1,7 +1,14 @@
 class Fullfillment::ShippingAddress < ApplicationRecord
   has_many :act_as_shippingables, class_name: 'Fullfillment::ActAsShippingable', foreign_key: :fullfillment_shipping_address_id
 
+  belongs_to :freight_provider, class_name: 'Freight::Provider', foreign_key: :freight_provider_id, optional: true
   has_many :ship_by_orders, class_name: 'Order::Order', through: :act_as_shippingables, dependent: :restrict_with_exception
+
+  validates :freight_tracking_code,
+            length: {
+              in: 5..40,
+              allow_blank: true
+            }
   validates :recipient_name,
             presence: true,
             length: {

@@ -1,0 +1,16 @@
+h5
+  |
+  span> รายละเอียดการซื้อบิลหมายเลข:
+  span
+    = order.billing_id
+.callout
+  table
+    thead
+      th SKU
+      th ชื่อสินค้า
+      th จำนวน
+      th ราคาต่อหน่วย
+      th ราคารวม
+    tbody
+    - order.order_details.each do |detail|
+      == render 'staffs/shared/order_details/order_details_row', detail: detail

@@ -4,6 +4,8 @@ class Inventory::ItemLot < ApplicationRecord
   has_many :instock_items, class_name: 'Inventory::ItemLotStockIn', foreign_key: 'inventory_item_lot_id'
   has_many :outstock_items, class_name: 'Inventory::ItemLotStockOut', foreign_key: 'inventory_item_lot_id'
 
+  accepts_nested_attributes_for :instock_items
+
   before_validation :set_default_stock_location
 
   validates :lot_number,
@@ -14,6 +16,10 @@ class Inventory::ItemLot < ApplicationRecord
             presence: true
   validate :exp_date_greater_than_mfg_date
   validate :mfg_date_lesser_than_exp_date
+
+  def life_span
+    (exp_date - Date.today).to_i
+  end
 
   def available
     total_instock - total_outstock
@@ -54,6 +60,6 @@ class Inventory::ItemLot < ApplicationRecord
   end
 
   def set_default_stock_location
-    self.warehouse_facility_id = 0 if store_at.nil?
+    self.warehouse_facility_id = 0 if warehouse_facility_id.blank? || warehouse_facility_id.nil?
   end
 end

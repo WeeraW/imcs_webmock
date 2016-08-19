@@ -10,10 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731083130) do
+ActiveRecord::Schema.define(version: 20160817093943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "accounting_bank_branches", force: :cascade do |t|
+    t.string   "display_name"
+    t.integer  "accounting_bank_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["accounting_bank_id"], name: "index_accounting_bank_branches_on_accounting_bank_id", using: :btree
+  end
+
+  create_table "accounting_banks", force: :cascade do |t|
+    t.string   "code"
+    t.string   "display_name"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "accounting_company_bank_accounts", force: :cascade do |t|
+    t.string   "code"
+    t.string   "display_name"
+    t.integer  "accounting_bank_branch_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["accounting_bank_branch_id"], name: "index_bank_branch_on_company_accounts", using: :btree
+  end
 
   create_table "customer_customers", force: :cascade do |t|
     t.string   "first_name",       null: false
@@ -69,6 +93,14 @@ ActiveRecord::Schema.define(version: 20160731083130) do
     t.index ["reset_password_token"], name: "index_distributors_on_reset_password_token", unique: true, using: :btree
   end
 
+  create_table "freight_providers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "telephone_number"
+    t.string   "fax_number"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   create_table "fullfillment_act_as_shippingables", force: :cascade do |t|
     t.integer  "fullfillment_shipping_address_id"
     t.integer  "shippingable_id"
@@ -89,6 +121,10 @@ ActiveRecord::Schema.define(version: 20160731083130) do
     t.string   "postal_code"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.string   "freight_tracking_code"
+    t.integer  "freight_provider_id"
+    t.index ["freight_provider_id"], name: "index_fullfillment_shipping_addresses_on_freight_provider_id", using: :btree
+    t.index ["freight_tracking_code"], name: "index_fullfillment_shipping_addresses_on_freight_tracking_code", using: :btree
   end
 
   create_table "inventory_act_as_countables", force: :cascade do |t|
@@ -172,15 +208,22 @@ ActiveRecord::Schema.define(version: 20160731083130) do
   end
 
   create_table "payment_details", force: :cascade do |t|
-    t.integer  "status",                                       default: 0
-    t.decimal  "pay_amount",          precision: 19, scale: 4
-    t.datetime "pay_datetime",                                             null: false
+    t.integer  "status",                                                           default: 0
+    t.decimal  "pay_amount",                              precision: 19, scale: 4
+    t.datetime "pay_datetime",                                                                 null: false
     t.text     "note"
     t.integer  "order_order_id"
     t.integer  "approve_by_staff_id"
     t.integer  "create_by_staff_id"
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.datetime "created_at",                                                                   null: false
+    t.datetime "updated_at",                                                                   null: false
+    t.integer  "accounting_company_bank_account_id",                                           null: false
+    t.string   "payment_receipt_image_file_file_name"
+    t.string   "payment_receipt_image_file_content_type"
+    t.integer  "payment_receipt_image_file_file_size"
+    t.datetime "payment_receipt_image_file_updated_at"
+    t.decimal  "pay_amount_reconciled",                   precision: 14, scale: 4
+    t.index ["accounting_company_bank_account_id"], name: "index_payment_details_on_accounting_company_bank_account_id", using: :btree
     t.index ["order_order_id"], name: "index_payment_details_on_order_order_id", using: :btree
   end
 
@@ -221,6 +264,16 @@ ActiveRecord::Schema.define(version: 20160731083130) do
     t.index ["staff_id"], name: "index_product_products_on_staff_id", using: :btree
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+    t.index ["name"], name: "index_roles_on_name", using: :btree
+  end
+
   create_table "staffs", force: :cascade do |t|
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -248,6 +301,12 @@ ActiveRecord::Schema.define(version: 20160731083130) do
     t.index ["employee_code"], name: "index_staffs_on_employee_code", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_staffs_on_reset_password_token", unique: true, using: :btree
     t.index ["staff_account"], name: "index_staffs_on_staff_account", unique: true, using: :btree
+  end
+
+  create_table "staffs_roles", id: false, force: :cascade do |t|
+    t.integer "staff_id"
+    t.integer "role_id"
+    t.index ["staff_id", "role_id"], name: "index_staffs_roles_on_staff_id_and_role_id", using: :btree
   end
 
   create_table "supplier_contact_infos", force: :cascade do |t|
@@ -295,6 +354,7 @@ ActiveRecord::Schema.define(version: 20160731083130) do
   add_foreign_key "customer_customers", "staffs"
   add_foreign_key "distributors", "staffs", column: "staff_creator_id"
   add_foreign_key "fullfillment_act_as_shippingables", "fullfillment_shipping_addresses", name: "fk_rails_act_as_shippingables_shipping_address"
+  add_foreign_key "fullfillment_shipping_addresses", "freight_providers"
   add_foreign_key "inventory_act_as_countables", "inventory_countable_units"
   add_foreign_key "inventory_inventory_items", "supplier_suppliers"
   add_foreign_key "inventory_item_lot_stock_ins", "inventory_item_lots"
@@ -306,6 +366,7 @@ ActiveRecord::Schema.define(version: 20160731083130) do
   add_foreign_key "order_orders", "staffs", column: "create_by_staff_id", name: "fk_rails_order_creator_staff"
   add_foreign_key "order_orders", "staffs", column: "paid_approve_by_staff_id", name: "fk_rails_order_payment_approval_staff"
   add_foreign_key "order_orders", "staffs", column: "shipping_approve_by_staff_id", name: "fk_rails_order_shipping_approval_staff"
+  add_foreign_key "payment_details", "accounting_company_bank_accounts"
   add_foreign_key "payment_details", "order_orders"
   add_foreign_key "payment_details", "staffs", column: "approve_by_staff_id", name: "fk_rails_payment_details_approval_staff"
   add_foreign_key "payment_details", "staffs", column: "create_by_staff_id", name: "fk_rails_payment_details_creator_staff"

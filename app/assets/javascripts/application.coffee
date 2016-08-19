@@ -18,10 +18,14 @@
 #
 #= require jquery
 #= require jquery_ujs
+#= require foundation
 #= require turbolinks
+#= require cocoon
 #= require react
 #= require react_ujs
 #= require lodash
 #= require components
-#= require semantic-ui
 #= require_tree .
+
+$(document).on 'turbolinks:load', (event) ->
+  $(document).foundation()

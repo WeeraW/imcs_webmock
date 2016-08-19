@@ -1,0 +1,18 @@
+= link_to 'เพิ่มสินค้าจากผู้ผลิต', new_staffs_warehouses_inventory_path
+.callout
+  table
+    thead
+      th #
+      th Supplier-SKU
+      th ชื่อสินค้า
+      th จำนวนคงเหลือรวม
+      th ผู้ผลิต
+      th Operations
+    tbody
+      - if @inventory_items.any?
+        - @inventory_items.each do |inventory_item|
+          = render 'inventory_item_row', inventory_item: inventory_item
+      - else
+        tr
+          td colspan="5"
+            h5 ไม่มีข้อมูล

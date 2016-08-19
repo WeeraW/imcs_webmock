@@ -1,0 +1,34 @@
+$black: #000;
+$base-font: 'Open Sans', sans-serif;
+
+.pdf-stock-recipe-form {
+  font-family: $base-font;
+
+  .paper-title {
+    text-align: center;
+  }
+
+  .number {
+    text-align: right;
+  }
+
+  strong,
+  span {
+    font-size: 10pt;
+  }
+
+  table {
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1pt solid $black;
+      padding: .5rem 1rem;
+    }
+  }
+}
+
+.pdf-recipient-label {
+  font-family: $base-font;
+  font-size: 11pt;
+}

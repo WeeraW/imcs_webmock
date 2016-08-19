@@ -1,0 +1,51 @@
+  <div class="callout">
+    <table>
+      <thead>
+        <th>
+          select
+        </th>
+        <th>
+          Billing ID
+        </th>
+        <th>
+          ผู้รับ
+        </th>
+        <th>
+          เลข EMS
+        </th>
+        <th>
+          ผู้สร้าง
+        </th>
+        <th>
+          ตรวจชำระเงินโดย
+        </th>
+        <th>
+          Operations
+        </th>
+      </thead>
+      <tbody>
+        <% if @orders.any? %>
+          <% @orders.each do |order| %>
+            <%= render 'order_row', order: order %>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="5">
+              <h5>ไม่มีข้อมูล</h5>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @orders %>
+      <%= form_tag(staffs_warehouses_pdf_address_renders_path, method: 'get', id: 'print_address_label_form') do %>
+      <div id="selected_order_for_print_address_ids">
+      </div>
+      <%= submit_tag 'พิมพ์ที่อยู่ผู้รับ', id: 'warehouse_print_address_labels_btn' %>
+      <% end %>
+      <br />
+      <%= form_tag(staffs_warehouses_pdf_stock_render_path, method: 'get') do %>
+        <div id="selected_order_for_print_stock_cutter_recipe_ids"></div>
+        <%= submit_tag 'ตัดสินค้าและพิมพ์ใบตัดสินค้า', id: 'warehouse_print_stock_cutter_recipe_btn' %>
+      <% end %>
+  </div>

@@ -1,0 +1,26 @@
+.callout
+  h5
+    | ประวัติการโอน
+    span
+      | บิลหมายเลข:
+      = " #{@order.billing_id}"
+  table
+    thead
+      th #
+      th จำนวนเงิน
+      th วันเวลาที่โอน
+      th ผู้แจ้งโอน
+      th ธนาคาร
+      th สาขา
+      th บัญชีที่โอนเข้า
+      th รูปหลักฐานการโอนเงิน
+      th สถานะการโอน
+    tbody
+      - if @payments.any?
+        - @payments.each do |payment|
+          = render 'payment_row', payment: payment
+      - else
+        tr
+          td colspan="5"
+            h5 ไม่มีข้อมูล
+    = paginate @payments

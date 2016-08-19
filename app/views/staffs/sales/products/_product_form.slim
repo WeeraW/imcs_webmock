@@ -1,0 +1,16 @@
+= simple_form_for product, url: action_path, method: method do |product_form|
+  = product_form.input :sku
+  = product_form.input :name_th
+  = product_form.input :description_th
+  = product_form.input :name_en
+  = product_form.input :description_en
+  = product_form.simple_fields_for :product_prices do |price|
+    = price.input :price_th, as: :decimal, input_html: { min: 1, max: 999_999 }
+  .callout
+    h5 สินค้าในเซต
+    #contains
+      = product_form.simple_fields_for :contains do |contain|
+        = render 'contain_fields', f: contain
+      = link_to_add_association 'เพิ่มสินค้าจากผู้ผลิต', product_form, :contains
+  = product_form.input :saleable, label: 'เปิดการขาย'
+  = product_form.submit
