@@ -22,6 +22,14 @@ class Order::Order < ApplicationRecord
               case_sensitive: false
             }
 
+  def self.fullfilled_orders_for_sale(sale_staff_id)
+    where ['create_by_staff_id = ? AND shipping_approve_by_staff_id IS NOT ?', sale_staff_id, nil]
+  end
+
+  def self.shipping_approved(warehouse_staff_id)
+    where shipping_approve_by_staff_id: warehouse_staff_id
+  end
+
   def total_price
     order_details.inject(0) { |a, e| a + (e.price_per_count * e.quantity) }
   end

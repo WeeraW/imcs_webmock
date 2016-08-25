@@ -4,15 +4,18 @@ Rails.application.routes.draw do
   devise_for :staffs
   namespace :staffs do
     namespace :sales do
+      resources :fullfilled_orders, only: [:index]
       resources :orders, only: [:index, :show, :new, :create, :edit, :update] do
         resources :payments, only: [:index, :show, :new, :create, :edit, :update]
       end
       resources :products, only: [:index, :show, :new, :create, :edit, :update]
     end
     namespace :warehouses do
+      resources :approved_shipping_orders, only: [:index]
+      resources :inventory_movements, only: [:create]
       resources :shipping_addresses, only: [:update]
       get :pdf_address_renders, to: 'pdf_renders#address_labels', defaults: { format: 'pdf' }
-      get :pdf_stock_render, to: 'pdf_renders#stock_recipes', defaults: { format: 'pdf' }
+      get :pdf_stock_render, to: 'pdf_renders#stock_receipts', defaults: { format: 'pdf' }
       resources :orders, only: [:index, :show, :new, :create, :edit, :update]
       resources :suppliers, only: [:index, :show, :new, :create, :edit, :update]
       resources :inventories, only: [:index, :show, :new, :create, :edit, :update] do

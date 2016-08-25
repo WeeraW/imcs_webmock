@@ -26,6 +26,11 @@ class Inventory::InventoryItem < ApplicationRecord
     item_lots.min_by(&:life_span)
   end
 
+  def available_lots
+    available_lots = item_lots.includes(:instock_items, :outstock_items).order(exp_date: :asc).select { |item_lot| item_lot.available > 0 }
+    available_lots
+  end
+
   private
 
   def add_item_to_lot(lot, quantity, price)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160817093943) do
+ActiveRecord::Schema.define(version: 20160822072341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,15 @@ ActiveRecord::Schema.define(version: 20160817093943) do
     t.datetime "updated_at",                  null: false
     t.index ["inventory_inventory_item_id"], name: "index_inventory_item_lots_on_inventory_inventory_item_id", using: :btree
     t.index ["warehouse_facility_id"], name: "index_inventory_item_lots_on_warehouse_facility_id", using: :btree
+  end
+
+  create_table "inventory_order_stock_out_histories", force: :cascade do |t|
+    t.integer  "inventory_item_lot_stock_out_id"
+    t.integer  "order_detail_id"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.index ["inventory_item_lot_stock_out_id"], name: "index_stock_out_on_inventory_stock_out_histories", using: :btree
+    t.index ["order_detail_id"], name: "index_order_detail_on_inventory_stock_out_histories", using: :btree
   end
 
   create_table "order_details", force: :cascade do |t|
@@ -361,6 +370,8 @@ ActiveRecord::Schema.define(version: 20160817093943) do
   add_foreign_key "inventory_item_lot_stock_outs", "inventory_item_lots"
   add_foreign_key "inventory_item_lots", "inventory_inventory_items"
   add_foreign_key "inventory_item_lots", "warehouse_facilities"
+  add_foreign_key "inventory_order_stock_out_histories", "inventory_item_lot_stock_outs"
+  add_foreign_key "inventory_order_stock_out_histories", "order_details"
   add_foreign_key "order_details", "order_orders"
   add_foreign_key "order_details", "product_products"
   add_foreign_key "order_orders", "staffs", column: "create_by_staff_id", name: "fk_rails_order_creator_staff"

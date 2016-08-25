@@ -4,6 +4,7 @@
 $(document).on 'turbolinks:load', (event) ->
   $('#warehouse_print_address_labels_btn').attr('disabled', true)
   $('#warehouse_print_stock_cutter_recipe_btn').attr('disabled', true)
+  $('#warehouse_print_billing_receipt_btn').attr('disabled', true)
   $('.selected_order').on 'change', (event) ->
     # clear DOM
     $('#selected_order_for_print_address_ids').html('')
@@ -18,9 +19,13 @@ $(document).on 'turbolinks:load', (event) ->
 
       $('#selected_order_for_print_stock_cutter_recipe_ids').append $(selected_id).clone()
 
+      $('#selected_order_for_print_billing_receipt_recipe_ids').append $(selected_id).clone()
+
     if $('.selected_order:checked').length == 0
       $('#warehouse_print_address_labels_btn').attr('disabled', true)
       $('#warehouse_print_stock_cutter_recipe_btn').attr('disabled', true)
+      $('#warehouse_print_billing_receipt_btn').attr('disabled', true)
     else
       $('#warehouse_print_address_labels_btn').attr('disabled', false)
       $('#warehouse_print_stock_cutter_recipe_btn').attr('disabled', false)
+      $('#warehouse_print_billing_receipt_btn').attr('disabled', false)

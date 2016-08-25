@@ -10,7 +10,7 @@ tr
   td
     = "#{order.paid_approve_by.try(:first_name)} #{order.paid_approve_by.try(:last_name)}"
   td
-    = order.shipping_approve_by
+    = "#{order.shipping_approve_by.try(:first_name)} #{order.shipping_approve_by.try(:last_name)}"
   td
     = link_to '[show] ', staffs_sales_order_path(order)
     = link_to '[edit] ', edit_staffs_sales_order_path(order)

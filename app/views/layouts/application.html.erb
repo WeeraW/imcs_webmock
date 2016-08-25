@@ -21,6 +21,9 @@
                     <%= link_to('ออเดอร์', staffs_sales_orders_path) %>
                   </li>
                   <li>
+                    <%= link_to('ออเดอร์ที่จัดส่งแล้ว',  staffs_sales_fullfilled_orders_path) %>
+                  </li>
+                  <li>
                     <%= link_to 'สินค้า', staffs_sales_products_path %>
                   </li>
                 </ul>
@@ -28,7 +31,10 @@
               <% if current_staff.has_role? :warehouse %>
                 <ul class="vertical menu">
                   <li>
-                    <%= link_to 'ออร์เดอร์รอจัดส่ง', staffs_warehouses_orders_path %>
+                    <%= link_to 'ออเดอร์รอจัดส่ง', staffs_warehouses_orders_path %>
+                  </li>
+                  <li>
+                    <%= link_to 'ออเดอร์ที่จัดส่งโดยคุณ', staffs_warehouses_approved_shipping_orders_path %>
                   </li>
                   <li>
                     <%= link_to('สินค้าจากผู้จัดส่ง', staffs_warehouses_inventories_path) %>

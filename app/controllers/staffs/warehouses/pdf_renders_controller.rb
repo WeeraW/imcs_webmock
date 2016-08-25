@@ -1,12 +1,12 @@
 class Staffs::Warehouses::PdfRendersController < ApplicationController
   before_action :authenticate_staff!
-  before_action :find_orders!
+  before_action :find_orders!, only: [:address_labels, :stock_receipts]
   def address_labels
     respond_if_print_address
   end
 
-  def stock_recipes
-    respond_if_print_stock_recipe
+  def stock_receipts
+    respond_if_print_stock_receipt
   end
 
   private
@@ -15,12 +15,12 @@ class Staffs::Warehouses::PdfRendersController < ApplicationController
     @orders = Order::Order.includes(order_details: :product).where(id: params[:order_ids])
   end
 
-  def respond_if_print_stock_recipe
+  def respond_if_print_stock_receipt
     respond_to do |format|
       format.pdf do
         render template: 'staffs/shared/pdf_forms/stock_recipe_forms',
                layout: 'pdf',
-               pdf: 'stock_recipes',
+               pdf: 'stock_receipts',
                page_size: 'A4',
                encoding: 'UTF-8',
               #  show_as_html: true,

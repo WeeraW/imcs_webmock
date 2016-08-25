@@ -1,4 +1,3 @@
-= link_to 'สร้างออเดอร์ใหม่', new_staffs_sales_order_path
 .callout
   table
     thead
@@ -6,12 +5,15 @@
       th Billing ID
       th ราคารวม
       th สร้างโดย
-      th Paid Approve By
-      th Shipping Approve By
+      th รับชำระโดย
+      th จัดส่งโดย
+      - if controller_name.eql?('fullfilled_orders') && action_name.eql?('index')
+        th เลขการจัดส่ง
+        th ผู้จัดส่ง
       th Operations
     tbody
-      - if @orders.any?
-        - @orders.each do |order|
+      - if orders.any?
+        - orders.each do |order|
           = render 'staffs/sales/shared/order_row', order: order
       - else
         tr

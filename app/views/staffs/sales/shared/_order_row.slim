@@ -1,0 +1,27 @@
+tr
+  td
+    = order.id
+  td
+    .reveal data-reveal=true id=("#{order.billing_id}")
+      == render 'staffs/shared/order_details/order_details_table', details: order.order_details
+      == render 'staffs/shared/shipping_addresses/address_detail', address: order.shipping_address
+    a data-open=("#{order.billing_id}")
+      = order.billing_id
+  td
+    = order.total_price
+  td
+    = "#{order.create_by.first_name} #{order.create_by.last_name}"
+  td
+    = "#{order.paid_approve_by.try(:first_name)} #{order.paid_approve_by.try(:last_name)}"
+  td
+    = "#{order.shipping_approve_by.try(:first_name)} #{order.shipping_approve_by.try(:last_name)}"
+  - if controller_name.eql?('fullfilled_orders') && action_name.eql?('index')
+    td
+      = order.shipping_address.freight_tracking_code || 'ยังไม่ระบุ'
+    td
+      = order.shipping_address.freight_provider.name
+  td
+    - if order.paid_approve_by.nil?
+      = link_to '[**แก้ไขรายการสั่งซื้อ] '
+      = link_to '[แจ้งโอนเงิน] ', new_staffs_sales_order_payment_path(order)
+    = link_to '[ประวัติการโอนเงิน]', staffs_sales_order_payments_path(order)

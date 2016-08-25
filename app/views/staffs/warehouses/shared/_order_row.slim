@@ -16,6 +16,8 @@ tr
   td
     = "#{order.paid_approve_by.first_name} #{order.paid_approve_by.last_name}"
   td
+    = "#{order.shipping_approve_by.try(:first_name)} #{order.shipping_approve_by.try(:last_name)}"
+  td
     .reveal data-reveal=true id=("order_form_tracking_code#{order.id}")
       = render 'staffs/shared/shipping_addresses/tracking_code_form', shipping_address: order.shipping_address, action_path: staffs_warehouses_shipping_address_path(order.shipping_address) ,method: 'put'
     a> data-open=("order_form_tracking_code#{order.id}") [กรอก Tracking Code]

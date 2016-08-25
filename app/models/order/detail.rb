@@ -1,6 +1,8 @@
 class Order::Detail < ApplicationRecord
   belongs_to :order, class_name: 'Order::Order', foreign_key: :order_order_id, optional: true
   belongs_to :product, class_name: 'Product::Product', foreign_key: :product_product_id
+  has_one :stock_out_history, class_name: 'Inventory::OrderStockOutHistory', foreign_key: :order_detail_id
+  has_many :item_lot_stock_outs, class_name: 'Inventory::ItemLotStockOut', through: :stock_out_history
 
   before_validation :set_price_percount
 

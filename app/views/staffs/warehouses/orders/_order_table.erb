@@ -20,13 +20,16 @@
           ตรวจชำระเงินโดย
         </th>
         <th>
+          จัดส่งโดย
+        </th>
+        <th>
           Operations
         </th>
       </thead>
       <tbody>
         <% if @orders.any? %>
           <% @orders.each do |order| %>
-            <%= render 'order_row', order: order %>
+            <%= render 'staffs/warehouses/shared/order_row', order: order %>
           <% end %>
         <% else %>
           <tr>
@@ -44,8 +47,6 @@
       <%= submit_tag 'พิมพ์ที่อยู่ผู้รับ', id: 'warehouse_print_address_labels_btn' %>
       <% end %>
       <br />
-      <%= form_tag(staffs_warehouses_pdf_stock_render_path, method: 'get') do %>
-        <div id="selected_order_for_print_stock_cutter_recipe_ids"></div>
-        <%= submit_tag 'ตัดสินค้าและพิมพ์ใบตัดสินค้า', id: 'warehouse_print_stock_cutter_recipe_btn' %>
-      <% end %>
+      <%= render 'staffs/warehouses/shared/allocate_inventory_and_print_form' if current_page?(controller: 'orders', action: 'index')%>
+      <%= render 'staffs/warehouses/shared/print_billing_form' if controller_name.eql?('approved_shipping_orders') && action_name.eql?('index') %>
   </div>

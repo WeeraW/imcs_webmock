@@ -2,7 +2,7 @@ class Staffs::Sales::OrdersController < ApplicationController
   before_action :authenticate_staff!
   before_action :find_orders!, only: [:show, :edit, :update]
   def index
-    @orders = Order::Order.where(create_by: current_staff).page(params[:page]).per(params[:per_page])
+    @orders = Order::Order.where(create_by: current_staff, shipping_approve_by: nil).page(params[:page]).per(params[:per_page])
   end
 
   def show; end
