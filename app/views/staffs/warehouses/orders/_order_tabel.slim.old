@@ -1,0 +1,17 @@
+table
+  thead
+    th select
+    th Billing ID
+    th ผู้รับ
+    th เลข EMS
+    th ผู้สร้าง
+    th ตรวจชำระเงินโดย
+    th Operations
+  tbody
+    - if @orders.any?
+      - @orders.each do |order|
+          = render 'order_row', order: order
+    - else
+      tr
+        td colspan="5"
+          h5 ไม่มีข้อมูล

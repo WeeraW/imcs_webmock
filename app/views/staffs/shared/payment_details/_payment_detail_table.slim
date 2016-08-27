@@ -1,0 +1,20 @@
+table
+  thead
+    th #
+    th Billing ID
+    th ผู้สร้าง
+    th จำนวนเงิน
+    th โอนจริง
+    th คงเหลือ
+    th วัน/เวลาที่โอน
+    th รูปภาพ
+    th สถานะการโอน
+    th Operations
+  tbody
+  - if payments.any?
+    - payments.each do |payment|
+      == render 'staffs/shared/payment_details/payment_approved_row', payment: payment
+  - else
+    tr
+      td colspan=5
+        h5 ไม่พบข้อมูล

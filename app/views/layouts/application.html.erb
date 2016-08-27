@@ -1,14 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Imcs</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <div class="row">
+          <% if !current_staff.nil? %>
+            <!-- NAV -->
+            <ul class="vertical medium-horizontal menu">
+              <% if current_staff.has_role? :warehouse %>
+                <li>
+                  <%= link_to 'ออเดอร์รอจัดส่ง', staffs_warehouses_orders_path %>
+                </li>
+                <li>
+                  <%= link_to 'ออเดอร์ที่จัดส่งโดยคุณ', staffs_warehouses_approved_shipping_orders_path %>
+                </li>
+                <li>
+                  <%= link_to('สินค้าจากผู้จัดส่ง', staffs_warehouses_inventories_path) %>
+                </li>
+                <li>
+                  <%= link_to 'ซัพพลายเออร์', staffs_warehouses_suppliers_path %>
+                </li>
+              <% end %>
+              <% if current_staff.has_role? :accountant %>
+                <li>
+                  <%= link_to 'แจ้งโอนที่รอการตรวจสอบ', staffs_accountings_payments_path %>
+                </li>
+                <li>
+                  <%= link_to 'การแจ้งโอนที่ตรวจแล้ว', staffs_accountings_approved_payments_path %>
+                </li>
+              <% end %>
+              <% if current_staff.has_role? :sale %>
+                <li>
+                  <%= link_to('ออเดอร์', staffs_sales_orders_path) %>
+                </li>
+                <li>
+                  <%= link_to('ออเดอร์ที่จัดส่งแล้ว',  staffs_sales_fullfilled_orders_path) %>
+                </li>
+                <li>
+                  <%= link_to 'สินค้า', staffs_sales_products_path %>
+                </li>
+              <% end %>
+                <li>
+                  <%= link_to 'ออกจากระบบ', destroy_staff_session_path(current_staff), method: :delete %>
+                </li>
+            </ul>
+            <!-- NAV -->
+          <% end %>
+        <!-- CONTENT -->
+        <div class="large-12 columns">
+          <div class="callout">
+            <%= yield %>
+          </div>
+        </div>
+        <!-- CONTENT -->
+        <p style="font-size: 7pt;">
+          V. Alpha 0.1.0
+        </p>
+      </div>
+    </div>
   </body>
 </html>

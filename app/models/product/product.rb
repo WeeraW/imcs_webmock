@@ -1,7 +1,10 @@
 class Product::Product < ApplicationRecord
+  attr_accessor :price_th
   belongs_to :last_editor, class_name: 'Staff', foreign_key: :staff_id
   has_many :contains, class_name: 'Product::Contain', foreign_key: :product_product_id, dependent: :restrict_with_exception
   has_many :product_prices, class_name: 'Product::Price', foreign_key: :product_product_id, dependent: :restrict_with_exception
+
+  accepts_nested_attributes_for :contains
 
   scope :available_products, -> { where 'saleable = TRUE' }
 

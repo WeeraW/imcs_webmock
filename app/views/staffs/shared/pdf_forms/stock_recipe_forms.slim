@@ -1,0 +1,5 @@
+- if @orders.any?
+  - @orders.each do |order|
+    = render 'staffs/shared/pdf_forms/stock_recipe_form', order: order
+    - unless order.eql? @orders.last
+      .page-break style="display:block; clear:both; page-break-after:always;"

@@ -1,0 +1,8 @@
+= simple_form_for payment, url: action_path, method: method do |payment_form|
+  = payment_form.input :pay_amount, as: :decimal, input_html: { min: 1, max: 999_999, autofocus: true }, label: 'จำนวนเงินที่โอน'
+  = payment_form.input :pay_datetime, html5: true, as: 'datetime', label: 'วันเวลาที่โอน **รูปแบบ เดือน/วัน/ปี(ค.ศ.) ชั่วโมง:นาที (AM/PM)'
+  = label :accounting_company_bank_account_id, 'โอนเข้าบัญชีธนาคาร'
+  = payment_form.select :accounting_company_bank_account_id, Accounting::CompanyBankAccount.all.collect { |e| ["#{e.bank.display_name}-#{e.display_name} #{e.code} ", e.id] }
+  = payment_form.input :payment_receipt_image_file, label: 'หลักฐานการชำระเงิน **ขนาดไฟล์ไม่เกิน 2 MB ชนิดไฟล์ jpeg, png, jpg เท่านั้น', input_html: { accept: 'image/jpg,image/jpeg,image/png' }
+  = payment_form.input :note
+  = payment_form.submit 'แจ้งโอน'

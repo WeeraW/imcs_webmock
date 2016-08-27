@@ -42,9 +42,10 @@ RSpec.describe Inventory::ItemLot, type: :model do
 
     context 'when have :instock_items and :outstock_items' do
       before(:each) do
-        @lot_record = create :inventory_item_lot,
-                             instock_items: create_list(:inventory_item_lot_stock_in, 20, quantity: 10),
-                             outstock_items: create_list(:inventory_item_lot_stock_out, 20, quantity: 5)
+        @lot_record = create :inventory_item_lot
+        @instock_item_records = create_list(:inventory_item_lot_stock_in, 20, quantity: 10, inventory_item_lot: @lot_record)
+        @outstock_item_record = create_list(:inventory_item_lot_stock_out, 20, quantity: 5, inventory_item_lot: @lot_record)
+
       end
 
       it 'should equal 100' do
@@ -104,7 +105,8 @@ RSpec.describe Inventory::ItemLot, type: :model do
 
     context 'when found :outstock_items' do
       before(:each) do
-        @lot_record = create :inventory_item_lot, outstock_items: create_list(:inventory_item_lot_stock_out, 20, quantity: 10)
+        @lot_record = create :inventory_item_lot
+        @outstock_item_record = create_list(:inventory_item_lot_stock_out, 20, quantity: 10, inventory_item_lot: @lot_record)
       end
       it 'should have :outstock_items records' do
         expect(@lot_record.outstock_items.count).to eq(20)

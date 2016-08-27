@@ -1,0 +1,28 @@
+.callout
+  h5
+    | สินค้า:
+    span>
+      = @product.sku + ' -'
+    span>
+      = @product.name_th
+  .callout
+    p
+    span
+      strong> รายละเอียดสินค้า:
+      span
+        = @product.description_th
+    p
+      strong> แก้ไขโดย:
+      span
+        = @product.last_editor.first_name.capitalize
+    p
+      strong> ราคาล่าสุด:
+      span>
+        = @product.latest_price
+      strong> แก้ไขราคาโดย:
+      span
+        = @product.product_prices.last.create_by.first_name.capitalize
+    h6 ประวัติการตั้งราคา
+    == render 'staffs/sales/prices/price_table', product_prices: @product.product_prices
+    h6 สินค้าในเซต
+    == render 'product_contains_table', product_contains: @product.contains

@@ -1,0 +1,14 @@
+table
+  thead
+    th #
+    th ราคา
+    th วันที่สร้าง
+    th ผู้สร้าง
+  tbody
+    - if product_prices.any?
+      - product_prices.each do |price|
+          == render 'staffs/sales/prices/price_row', price: price
+    - else
+      tr
+        td colspan=4
+          h5 ไม่พบข้อมูล

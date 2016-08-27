@@ -1,0 +1,14 @@
+table
+  thead
+    th #
+    th Supplier SKU
+    th Inventory Name
+    th Quantity
+  tbody
+    - if product_contains.any?
+      - product_contains.each do |contain|
+        == render 'product_contains_row', contain: contain
+    - else
+      tr
+        td colspan=4
+          h6 ไม่พบสินค้าใดๆ

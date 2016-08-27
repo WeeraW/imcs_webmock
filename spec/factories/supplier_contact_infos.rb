@@ -6,6 +6,6 @@ FactoryGirl.define do
     sequence(:mobile_number) { |n| '0' * (10 - n.to_s.length) + n.to_s }
     sequence(:fax_number) { |n| '0' * (9 - n.to_s.length) + n.to_s }
     sequence(:fax_ext) { |n| n.to_s }
-    supplier nil
+    association :supplier, factory: :supplier_supplier
   end
 end

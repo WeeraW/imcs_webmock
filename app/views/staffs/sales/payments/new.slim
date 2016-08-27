@@ -1,0 +1,5 @@
+h5
+  | แจ้งยอดโอนหมายเลขบิล: 
+  span
+    = @order.billing_id
+== render 'payment_form', payment: @payment,action_path: staffs_sales_order_payments_path(@order), method: 'post'

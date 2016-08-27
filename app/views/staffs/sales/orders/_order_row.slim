@@ -1,0 +1,18 @@
+tr
+  td
+    = order.id
+  td
+    = order.billing_id
+  td
+    = order.total_price
+  td
+    = "#{order.create_by.first_name} #{order.create_by.last_name}"
+  td
+    = "#{order.paid_approve_by.try(:first_name)} #{order.paid_approve_by.try(:last_name)}"
+  td
+    = "#{order.shipping_approve_by.try(:first_name)} #{order.shipping_approve_by.try(:last_name)}"
+  td
+    = link_to '[show] ', staffs_sales_order_path(order)
+    = link_to '[edit] ', edit_staffs_sales_order_path(order)
+    = link_to '[แจ้งโอนเงิน] ', new_staffs_sales_order_payment_path(order)
+    = link_to '[ประวัติการโอนเงิน]', staffs_sales_order_payments_path(order)

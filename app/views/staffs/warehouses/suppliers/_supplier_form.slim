@@ -1,0 +1,7 @@
+= simple_form_for supplier, url: action_path, method: method do |supplier_form|
+  = supplier_form.input :tax_id, label: 'Tax ID'
+  = supplier_form.input :company_code
+  = supplier_form.input :display_name
+  = supplier_form.input :address
+  = supplier_form.input :postal_code
+  = supplier_form.submit

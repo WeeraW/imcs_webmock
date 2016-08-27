@@ -1,0 +1,10 @@
+table
+  thead
+    th SKU
+    th ชื่อสินค้า
+    th จำนวน
+    th ราคาต่อหน่วย
+    th ราคารวม
+  tbody
+    - details.each do |detail|
+      == render 'staffs/shared/order_details/order_details_row', detail: detail

@@ -5,5 +5,6 @@ FactoryGirl.define do
     note 'Test note'
     association :order, factory: :order_order
     association :approve_by, factory: :staff
+    association :create_by, factory: :staff
   end
 end

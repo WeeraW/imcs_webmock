@@ -11,9 +11,9 @@ class Supplier::Supplier < ApplicationRecord
             :tax_id,
             uniqueness: { case_sensitive: false }
   validates :address,
-            length: { in: 0..500 }
+            length: { in: 0..500, allow_blank: true }
   validates :postal_code,
-            length: { is: 5 }
+            length: { allow_blank: true, is: 5 }
   validates :tax_id,
-            length: { is: 13 }
+            length: { allow_blank: true, is: 13 }
 end

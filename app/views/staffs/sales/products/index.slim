@@ -1,0 +1,20 @@
+= link_to 'เพิ่มสินค้าใหม่', new_staffs_sales_product_path
+.callout
+  table
+    thead
+      th #
+      th SKU
+      th ชื่อภาษาไทย
+      th ผู้สร้าง
+      th ราคาล่าสุด
+      th ผู้แก้ไขราคาล่าสุด
+      th Operations
+    tbody
+      - if @products.any?
+        - @products.each do |product|
+          = render 'product_row', product: product
+      - else
+        tr
+          td colspan="5"
+            h5 ไม่มีข้อมูล
+    = paginate @products

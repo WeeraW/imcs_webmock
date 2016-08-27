@@ -1,0 +1,5 @@
+- if @orders.any?
+  - @orders.each do |order|
+    = render 'address_label', order: order
+    - unless order.eql? @orders.last
+      .page-break style="display:block; clear:both; page-break-after:always;"

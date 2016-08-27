@@ -1,0 +1,20 @@
+= link_to 'เพิ่มล็อตสินค้าใหม่', new_staffs_warehouses_inventory_item_lot_path
+.callout
+  table
+    thead
+      th #
+      th หมายเลขล็อต
+      th วันที่ผลิต
+      th วันหมดอายุ
+      th หมดอายุภายใน(วัน)
+      th ยอดคงเหลือ
+      th ราคาทุนเฉลี่ย
+      th Operations
+    tbody
+      - if @item_lots.any?
+        - @item_lots.each do |item_lot|
+          = render 'item_lot_row', item_lot: item_lot
+      - else
+        tr
+          td colspan="5"
+            h5 ไม่พบล็อตสินค้าใดๆ

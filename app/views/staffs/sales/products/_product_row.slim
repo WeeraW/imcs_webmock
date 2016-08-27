@@ -1,0 +1,15 @@
+tr
+  td
+    = product.id
+  td
+    = product.sku
+  td
+    = product.name_th
+  td
+    = "#{product.last_editor.first_name} #{product.last_editor.last_name}"
+  td
+    = product.latest_price
+  td
+    = "#{product.product_prices.last.create_by.first_name} #{product.product_prices.last.create_by.last_name}"
+  td
+    = link_to '[รายละเอียด] ', staffs_sales_product_path(product)

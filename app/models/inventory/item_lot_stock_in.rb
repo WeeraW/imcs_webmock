@@ -1,5 +1,5 @@
 class Inventory::ItemLotStockIn < ApplicationRecord
-  belongs_to :inventory_item_lot, class_name: 'Inventory::ItemLot', foreign_key: :inventory_item_lot_id
+  belongs_to :inventory_item_lot, class_name: 'Inventory::ItemLot', foreign_key: :inventory_item_lot_id, optional: true
 
   scope :specified_price_per_count, -> { where ['price_per_count > ?', 0] }
 

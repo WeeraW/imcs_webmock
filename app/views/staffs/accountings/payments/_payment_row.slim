@@ -1,0 +1,28 @@
+tr
+  td
+    = payment.id
+  td
+    .tiny.reveal id=(payment.order.billing_id) data-reveal=true
+      == render 'staffs/shared/order_details', order: payment.order
+    a data-open=(payment.order.billing_id)
+      = payment.order.billing_id
+  td
+    = "#{payment.create_by.first_name} #{payment.create_by.last_name}"
+  td
+    = payment.pay_amount.to_s(:rounded, precision: 2)
+  td
+    = payment.pay_amount_reconciled.to_s(:rounded, precision: 2) unless payment.pay_amount_reconciled.nil?
+  td
+    = payment.pay_amount - payment.pay_amount_reconciled unless payment.pay_amount_reconciled.nil?
+  td
+    = payment.pay_datetime.in_time_zone('Bangkok').strftime('%d/%m/%Y %H:%M')
+  td
+    .tiny.reveal id=("payment_receipt_image#{payment.id}") data-reveal=true
+      = image_tag payment.payment_receipt_image_file
+    a data-open=("payment_receipt_image#{payment.id}") ดู
+  td
+    = payment.status
+  td
+    .tiny.reveal id=("payment_detail#{payment.id}") data-reveal=true
+      == render 'payment_reconcile_form', payment: payment, action_path: staffs_accountings_payment_path(payment), method: 'put'
+    a data-open=("payment_detail#{payment.id}") [กระทบยอด]
