@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  # root to: 'devise/sessions#new'
   # devise_for :distributors
   devise_for :staffs
+  devise_scope :staff do
+    root to: 'devise/sessions#new'
+  end
+
   namespace :staffs do
     namespace :sales do
       resources :fullfilled_orders, only: [:index]
@@ -28,8 +31,6 @@ Rails.application.routes.draw do
       resources :orders, only: [:index, :new, :create, :edit, :update]
     end
   end
-  as :staff do
-    # Define routes for Staff within this block.
-  end
+  # get '*not_found' => 'application#render_not_found'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
