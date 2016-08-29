@@ -1,0 +1,47 @@
+doctype html
+html
+  head
+    - content_for :title do
+      = flash[:title]
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+    title #{ content_for?(:title) ? yield(:title) : "Untitled" }
+    = stylesheet_link_tag "application"
+    = javascript_include_tag "application", 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  
+  body
+    .container
+      .row
+        - if !current_staff.nil?
+          /! nav menu
+          ul.vertical.medium-horizontal.menu
+            - if current_staff.has_role? :warehouse
+              li
+                = link_to 'ออเดอร์รอจัดส่ง', staffs_warehouses_orders_path
+              li
+                = link_to 'ออเดอร์ที่จัดส่งโดยคุณ', staffs_warehouses_approved_shipping_orders_path
+              li
+                = link_to('สินค้าจากผู้จัดส่ง', staffs_warehouses_inventories_path)
+              li
+                = link_to 'ซัพพลายเออร์', staffs_warehouses_suppliers_path
+            - if current_staff.has_role? :accountant
+              li
+                = link_to 'แจ้งโอนที่รอการตรวจสอบ', staffs_accountings_payments_path
+              li
+                = link_to 'การแจ้งโอนที่ตรวจแล้ว', staffs_accountings_approved_payments_path
+            - if current_staff.has_role? :sale
+              li
+                = link_to('ออเดอร์', staffs_sales_orders_path)
+              li
+                = link_to('ออเดอร์ที่จัดส่งแล้ว', staffs_sales_fullfilled_orders_path)
+              li
+                = link_to 'สินค้า', staffs_sales_products_path
+               
+            li
+              = link_to 'ออกจากระบบ', destroy_staff_session_path, method: :delete, id: 'staff_log_out'
+        /! contents
+        .large-12.columns
+          .callout
+            == yield
+        p style="font-size: 7pt;" 0.1.0
