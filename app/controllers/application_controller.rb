@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_devise_parameters, if: :devise_controller?
+  before_action :set_title
 
   add_flash_types :warning, :title
 
@@ -14,6 +15,10 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def set_title
+    flash[:title] = "Core\" Caralluma #{current_staff.nil? ? '' : current_staff.class.to_s + '::' + controller_name.titleize}"
+  end
 
   def configure_devise_parameters
     added_attrs = [:staff_account, :email, :password, :password_confirmation, :remember_me]
