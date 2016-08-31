@@ -33,6 +33,8 @@ class ApplicationController < ActionController::Base
       staffs_sales_orders_path
     elsif current_staff.has_role? :accountant
       staffs_accountings_payments_path
+    elsif current_staff.has_role? :modorator
+      staffs_administrators_staffs_path
     end
   end
 

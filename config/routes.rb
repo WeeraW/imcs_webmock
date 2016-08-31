@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   end
 
   namespace :staffs do
+    namespace :administrators do
+      resources :staffs, except: [:destroy]
+    end
     namespace :sales do
       resources :fullfilled_orders, only: [:index]
       resources :orders, only: [:index, :show, :new, :create, :edit, :update] do

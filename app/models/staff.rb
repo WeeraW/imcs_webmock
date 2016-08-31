@@ -4,7 +4,7 @@ class Staff < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   # include DeviseTokenAuth::Concerns::User
   # Include default devise modules. :confirmable, :omniauthable :registerable, :recoverable,
-  attr_accessor :login
+  attr_accessor :login, :modorator, :sale, :accountant, :warehouse
   devise  :database_authenticatable,
           :rememberable,
           :trackable,

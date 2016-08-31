@@ -1,0 +1,4 @@
+= link_to 'เพิ่ม Staff', new_staffs_administrators_staff_path
+.callout
+  == render 'staffs/shared/staffs/staff_table', staffs: @staffs
+  = paginate @staffs

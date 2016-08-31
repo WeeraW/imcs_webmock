@@ -1,0 +1,17 @@
+table
+  thead
+    th #
+    th Employee Code
+    th First name
+    th Last name
+    th Nickname
+    th Username
+    th Roles
+    th Operations
+  tbody
+    - if staffs.any?
+        - staffs.each do |staff|
+          = render 'staffs/shared/staffs/staff_row', staff: staff
+    - else
+      tr
+        td colspan="7" ไม่พบข้อมูล

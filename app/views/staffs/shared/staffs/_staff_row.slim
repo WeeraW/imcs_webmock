@@ -1,0 +1,18 @@
+tr
+  td
+    = staff.id
+  td
+    = staff.employee_code
+  td
+    = staff.first_name
+  td
+    = staff.last_name
+  td
+    = staff.nickname
+  td
+    = staff.staff_account
+  td
+    - staff.roles.each do |role|
+      = role.try(:name) + ' '
+  td
+    = link_to '[แก้ไข]', edit_staffs_administrators_staff_path(staff)

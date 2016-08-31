@@ -1,0 +1,17 @@
+= simple_form_for staff, method: method, url: action_path do |staff_form|
+  = staff_form.input :employee_code
+  = staff_form.input :email
+  = staff_form.input :staff_account
+  = staff_form.input :first_name
+  = staff_form.input :last_name
+  = staff_form.input :nickname
+  = staff_form.input :password
+  = staff_form.input :password_confirmation
+  .callout
+    h4 User Roles
+    = staff_form.collection_check_boxes :role_ids, Role.all, :id, :name
+    / = staff_form.input :modorator, as: :boolean
+    / = staff_form.input :accountant, as: :boolean
+    / = staff_form.input :sale, as: :boolean
+    / = staff_form.input :warehouse, as: :boolean
+  = staff_form.submit
