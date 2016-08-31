@@ -2,13 +2,13 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   # config.reset_password_keys = [ :staff_account ]
-  # config.confirmation_keys = [ :staff_account 
+  # config.confirmation_keys = [ :staff_account ]
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '60cd187377ed3b62362fc7c77ac5ba4e2ffe988986799d997eecc9667dc17ff46c47a2cab2ae6ac2fa41cef1f7679d932f91d436d1c51c32db911aaadae412c1'
+  config.secret_key = ENV['DEVISE_SECRET_KEY'] if Rails.env.eql? 'production'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
