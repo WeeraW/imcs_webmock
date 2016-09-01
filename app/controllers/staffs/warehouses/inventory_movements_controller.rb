@@ -20,6 +20,7 @@ class Staffs::Warehouses::InventoryMovementsController < ApplicationController
         flash['warning'].append("Inventory Items in storage is not enough for Billng ID: #{order.billing_id}")
       end
     end
+    logger.info "Order Inventory Allocate Hash: #{@orders_allocate_hash.inspect}"
     allocate_inventory_orders
     redirect_to_render_order_receipt
   end

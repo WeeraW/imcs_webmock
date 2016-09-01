@@ -60,4 +60,5 @@ if Rails.env.eql? 'development'
 
   # Inventory Seeds
   2.times { |n| Inventory::InventoryItem.create! supplier_sku: "supplier-#{n}", display_name: Faker::Commerce.product_name, supplier: supplier_default }
+  puts '################## End development seed ##################'
 end
