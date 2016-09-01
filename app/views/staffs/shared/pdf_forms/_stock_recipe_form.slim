@@ -22,6 +22,9 @@
     br
     span> โทร. #{ order.shipping_address.recipient_telephone_number }
   h3.paper-title ใบเสร็จรับเงิน
+  p 
+    span บิลหมายเลข #{ order.billing_id } 
+    span วันที่ #{ order.created_at.localtime.strftime('%d/%m/%Y %H:%M') }
   table
     thead
       th รหัสสินค้า
