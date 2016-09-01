@@ -19,8 +19,10 @@ class Staffs::Warehouses::ItemLotsController < ApplicationController
   private
 
   def render_or_redirect_to_index_after_save
-    if @item_lot.save!
-      redirect_to staffs_warehouses_inventory_item_lots_path
+    if @item_lot.save
+      respond_to do |format|
+        format.html { redirect_to staffs_warehouses_inventory_item_lots_path }
+      end
     else
       render 'new'
     end

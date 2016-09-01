@@ -39,8 +39,10 @@ class Staffs::Warehouses::SuppliersController < ApplicationController
   end
 
   def render_or_redirect_to_index_after_save
-    if @supplier.save!
-      redirect_to staffs_warehouses_suppliers_path
+    if @supplier.save
+      respond_to do |format|
+        format.html { redirect_to staffs_warehouses_suppliers_path }
+      end
     else
       render 'new'
     end

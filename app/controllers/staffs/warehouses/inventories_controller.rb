@@ -34,8 +34,10 @@ class Staffs::Warehouses::InventoriesController < ApplicationController
   end
 
   def render_or_redirect_to_index_after_save
-    if @inventory_item.save!
-      redirect_to staffs_warehouses_inventories_path
+    if @inventory_item.save
+      respond_to do |format|
+        format.html { redirect_to staffs_warehouses_inventories_path }
+      end
     else
       render 'new'
     end

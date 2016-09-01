@@ -34,8 +34,10 @@ class Staffs::Sales::PaymentsController < ApplicationController
   end
 
   def render_or_redirect_on_save
-    if @payment.save!
-      redirect_to staffs_sales_order_payments_path(@order)
+    if @payment.save
+      respond_to do |format|
+        format.html { redirect_to staffs_sales_order_payments_path(@order) }
+      end
     else
       render 'new'
     end

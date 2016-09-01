@@ -35,8 +35,10 @@ class Staffs::Sales::OrdersController < ApplicationController
   end
 
   def render_or_redirect_save
-    if @order.save!
-      redirect_to staffs_sales_orders_path
+    if @order.save
+      respond_to do |format|
+        format.html { redirect_to staffs_sales_orders_path }
+      end
     else
       render 'new'
     end

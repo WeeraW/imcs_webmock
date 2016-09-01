@@ -16,8 +16,10 @@ class Staffs::Warehouses::ShippingAddressesController < ApplicationController
   end
 
   def redirect_or_render_on_save
-    if @shipping_address.save!
-      redirect_to staffs_warehouses_orders_path
+    if @shipping_address.save
+      respond_to do |format|
+        format.html { redirect_to staffs_warehouses_orders_path }
+      end
     else
       redirect_to staffs_warehouses_orders_path, error: @shipping_address.errors.full_messages
     end

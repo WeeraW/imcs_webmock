@@ -25,7 +25,7 @@ class Staffs::Administrators::StaffsController < ApplicationController
   private
 
   def save_and_respond
-    if @staff.save!
+    if @staff.save
       respond_to do |format|
         format.html { redirect_to staffs_administrators_staffs_path }
       end

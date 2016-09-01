@@ -63,8 +63,10 @@ class Staffs::Sales::ProductsController < ApplicationController
   end
 
   def render_or_redirect_on_save
-    if @product.save!
-      redirect_to staffs_sales_products_path
+    if @product.save
+      respond_to do |format|
+        format.html { redirect_to staffs_sales_products_path }
+      end
     else
       render 'new'
     end

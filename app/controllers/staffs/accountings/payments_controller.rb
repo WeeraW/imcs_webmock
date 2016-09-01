@@ -21,7 +21,6 @@ class Staffs::Accountings::PaymentsController < ApplicationController
   private
 
   def approve_order_if_paid_full
-    puts '#' * 100, @payment.order.total_paid_reconciled
     return if @payment.order.total_price - @payment.order.total_paid_reconciled > 0
     @payment.order.paid_approve_by = current_staff
     @payment.order.save!
@@ -36,8 +35,10 @@ class Staffs::Accountings::PaymentsController < ApplicationController
   end
 
   def render_or_redirect_on_save
-    if @payment.save!
-      redirect_to staffs_accountings_payments_path
+    if @payment.save
+      respond_to do |format|
+        format.html { redirect_to staffs_accountings_payments_path }
+      end
     else
       render 'index'
     end
