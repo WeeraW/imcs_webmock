@@ -19,7 +19,7 @@ tr
     td
       = order.shipping_address.freight_tracking_code || 'ยังไม่ระบุ'
     td
-      = order.shipping_address.freight_provider.name
+      = order.shipping_address.freight_provider.try(:name) || 'ยังไม่ระบุ'
   td
     - if order.paid_approve_by.nil?
       = link_to '[**แก้ไขรายการสั่งซื้อ] '
