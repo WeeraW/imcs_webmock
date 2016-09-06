@@ -11,6 +11,12 @@ Warehouse::Facility.create! id: 0, code: 'UNIDENTIFIED', display_name: 'UNIDENTI
 supplier_default = Supplier::Supplier.create! id: 0, company_code: 'UNIDENTIFIED', display_name: 'UNIDENTIFIED'
 freight_provider_default = Freight::Provider.create! id: 0, name: 'UNIDENTIFIED'
 
+# Role Seeds
+roles = %w(modorator warehouse accountant sale commission_report)
+roles.each do |role|
+  Role.create!(name: role)
+end
+
 bank_seeds = [
   { id: 0, code: 'UNIDENTIFIED', display_name: 'UNIDENTIFIED' },
   { code: 'BBL', display_name: 'ธนาคารกรุงเทพ' },

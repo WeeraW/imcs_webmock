@@ -9,4 +9,4 @@
   = simple_fields_for :instock_items do |instock_items_form|
     = instock_items_form.input :quantity, as: :integer, required: true, label: 'จำนวนที่รับเข้า', input_html: { min: 1, max: 999_999  }
     = instock_items_form.input :price_per_count, as: :decimal, required: true, label: 'ราคาต่อหน่วย', input_html: { min: 1, max: 999_999 , length: 6 }
-  = item_lot_form.submit
+  = item_lot_form.button :submit

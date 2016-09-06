@@ -10,8 +10,4 @@
   .callout
     h4 User Roles
     = staff_form.collection_check_boxes :role_ids, Role.all, :id, :name
-    / = staff_form.input :modorator, as: :boolean
-    / = staff_form.input :accountant, as: :boolean
-    / = staff_form.input :sale, as: :boolean
-    / = staff_form.input :warehouse, as: :boolean
-  = staff_form.submit
+  = staff_form.button :submit, 'สร้างผู้ใช้ใหม่'

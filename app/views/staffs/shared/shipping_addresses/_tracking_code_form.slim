@@ -2,4 +2,4 @@
   = shipping_address_form.input :freight_tracking_code, label: 'Tracking Code', required: true
   = shipping_address_form.label :freight_provider_id
   = shipping_address_form.select :freight_provider_id, Freight::Provider.all.collect { |e| [e.name, e.id] }, required: true
-  = shipping_address_form.submit 'บันทึก'
+  = shipping_address_form.button :submit, 'บันทึก'

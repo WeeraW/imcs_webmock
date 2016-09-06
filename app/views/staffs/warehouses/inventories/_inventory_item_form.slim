@@ -2,5 +2,5 @@
   = inv_form.input :supplier_sku
   = inv_form.input :display_name
   = inv_form.input :supplier_supplier_id, collection: Supplier::Supplier.all.collect { |e| ["#{e.company_code} - #{e.display_name}", e.id] }, selected: 1, label: 'Supplier'
-  = inv_form.submit
+  = inv_form.button :submit
 end

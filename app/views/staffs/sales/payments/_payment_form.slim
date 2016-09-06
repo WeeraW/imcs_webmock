@@ -5,4 +5,4 @@
   = payment_form.select :accounting_company_bank_account_id, Accounting::CompanyBankAccount.all.collect { |e| ["#{e.bank.display_name}-#{e.display_name} #{e.code} ", e.id] }
   = payment_form.input :payment_receipt_image_file, label: 'หลักฐานการชำระเงิน **ขนาดไฟล์ไม่เกิน 2 MB ชนิดไฟล์ jpeg, png, jpg เท่านั้น', input_html: { accept: 'image/jpg,image/jpeg,image/png' }
   = payment_form.input :note
-  = payment_form.submit 'แจ้งโอน'
+  = payment_form.button :submit, 'แจ้งโอน'

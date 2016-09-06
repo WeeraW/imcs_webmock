@@ -2,6 +2,7 @@ class Order::Order < ApplicationRecord
   attr_accessor :selected
 
   include Shippingable
+  accepts_nested_attributes_for :shipping_address
   belongs_to :create_by, class_name: 'Staff', foreign_key: :create_by_staff_id
   belongs_to :paid_approve_by, class_name: 'Staff', foreign_key: :paid_approve_by_staff_id, optional: true
   belongs_to :shipping_approve_by, class_name: 'Staff', foreign_key: :shipping_approve_by_staff_id, optional: true
@@ -37,6 +38,13 @@ class Order::Order < ApplicationRecord
   def total_paid_reconciled
     payment_details.sum(:pay_amount_reconciled)
   end
+
+  # protected
+  #
+  # def build_client(params)
+  #   raise "Unknown client_type: #{client_type}" unless CLIENT_TYPES.include?(client_type)
+  #   self.client = client_type.constantize.new(params)
+  # end
 
   private
 

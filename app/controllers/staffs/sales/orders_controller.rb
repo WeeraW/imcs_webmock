@@ -10,6 +10,7 @@ class Staffs::Sales::OrdersController < ApplicationController
   def new
     @order = Order::Order.new
     @order.order_details.new
+    @order.build_act_as_shippingable.build_fullfillment_shipping_address
   end
 
   def create
@@ -31,7 +32,7 @@ class Staffs::Sales::OrdersController < ApplicationController
   private
 
   def create_shipping_address
-    @order.shipping_address = Fullfillment::ShippingAddress.create!(address_params[:shipping_address])
+    @order.shipping_address = Fullfillment::ShippingAddress.new address_params[:shipping_address_attributes]
   end
 
   def render_or_redirect_save
@@ -61,6 +62,6 @@ class Staffs::Sales::OrdersController < ApplicationController
   end
 
   def address_params
-    params.fetch(:order_order).permit(shipping_address: [:recipient_name, :recipient_telephone_number, :address, :district, :city, :state, :postal_code])
+    params.fetch(:order_order).permit(shipping_address_attributes: [:recipient_name, :recipient_telephone_number, :address, :district, :city, :state, :postal_code])
   end
 end

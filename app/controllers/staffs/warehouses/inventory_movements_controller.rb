@@ -43,10 +43,13 @@ class Staffs::Warehouses::InventoryMovementsController < ApplicationController
     order.order_details.each do |order_detail|
       order_stock_out[order_detail.id] = []
       allocate_inventory_lots = []
+      allocated_lots = nil
       order_detail.product.contains.each do |product_contain|
-        allocate_inventory_lots.concat allocate_lot_by_inventory_item(product_contain, order_detail.quantity * product_contain.quantity)
+        allocated_lots = allocate_lot_by_inventory_item(product_contain, order_detail.quantity * product_contain.quantity)
+        break unless allocated_lots
+        allocate_inventory_lots.concat allocated_lots
       end
-      return false unless allocate_inventory_lots
+      return false unless allocated_lots
       order_stock_out[order_detail.id].concat allocate_inventory_lots
     end
     order_stock_out
