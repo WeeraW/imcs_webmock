@@ -4,7 +4,7 @@ tr
   td
     = payment.pay_amount
   td
-    = payment.pay_datetime
+    = payment.pay_datetime.in_time_zone('Bangkok').strftime('%d/%m/%Y %H:%M')
   td
     = "#{payment.create_by.first_name} #{payment.create_by.last_name}"
   td

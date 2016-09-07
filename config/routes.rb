@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   end
 
   namespace :staffs do
+    namespace :reports do
+      resources :staff_commissions, only: [:index]
+    end
     namespace :administrators do
       resources :staffs, except: [:destroy]
     end

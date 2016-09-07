@@ -23,6 +23,7 @@ class Staffs::Accountings::PaymentsController < ApplicationController
   def approve_order_if_paid_full
     return if @payment.order.total_price - @payment.order.total_paid_reconciled > 0
     @payment.order.paid_approve_by = current_staff
+    @payment.order.paid_full_date = DateTime.now
     @payment.order.save!
   end
 
