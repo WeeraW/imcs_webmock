@@ -1,0 +1,24 @@
+table
+  thead
+    th รหัสพนักงาน
+    th ชื่อ
+    th นามสกุล
+    th ยอดขายรวม
+    / th เปอร์เซ็นคอมมิชชัน
+    th คอมมิชชันที่ได้รับ
+  tbody
+    - if staff_orders.any?
+      - staff_orders.each do |staff_order|
+        tr
+          td
+            = staff_order.try(:employee_code)
+          td
+            = staff_order.try(:first_name)
+          td
+            = staff_order.try(:last_name)
+          td
+            /! Need Helper
+            = (staff_order.created_orders.sum { |e| e.total_paid_reconciled }).to_s(:currency, locale: :th)
+          td
+            /! Need Helper
+            = staff_order.created_orders.sum { |e| e.total_paid_reconciled } * 0.015
