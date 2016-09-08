@@ -14,11 +14,6 @@ class Staffs::Warehouses::SuppliersController < ApplicationController
 
   def create
     @supplier = Supplier::Supplier.new(supplier_params)
-    # @supplier = Supplier::Supplier.new.tap do |o|
-    #   o.tax_id = supplier_params[:tax_id]
-    #   o.display_name = supplier_params[:display_name]
-    #   o.company_code = supplier_params[:supplier_supplier_id]
-    # end
     render_or_redirect_to_index_after_save
   end
 
