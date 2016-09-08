@@ -44,19 +44,19 @@ bank_seeds.map { |e| Accounting::Bank.create! e }
 # development seeds
 if Rails.env.eql? 'development'
   puts '################## development seed ##################'
-  admin = Staff.new email: 'admin@example.com', first_name: 'admin', last_name: 'dave', employee_code: '0001', nickname: 'admin', password: 'qwerty1234', staff_account: 'admin'
+  admin = Staff.new email: 'admin@example.com', first_name: 'admin', last_name: 'dave', employee_code: '0001', nickname: 'admin', password: 'qwerty1234', staff_account: 'admin', is_active: true
   admin.add_role :modorator
   admin.save!
 
-  warehouse = Staff.new email: 'warehouse@example.com', first_name: 'warehouse', last_name: 'dave', employee_code: '0002', nickname: 'warehouse', password: 'qwerty1234', staff_account: 'warehouse'
+  warehouse = Staff.new email: 'warehouse@example.com', first_name: 'warehouse', last_name: 'dave', employee_code: '0002', nickname: 'warehouse', password: 'qwerty1234', staff_account: 'warehouse', is_active: true
   warehouse.add_role :warehouse
   warehouse.save!
 
-  sale = Staff.new email: 'sale@example.com', first_name: 'sale', last_name: 'dave', employee_code: '0003', nickname: 'sale', password: 'qwerty1234', staff_account: 'sale'
+  sale = Staff.new email: 'sale@example.com', first_name: 'sale', last_name: 'dave', employee_code: '0003', nickname: 'sale', password: 'qwerty1234', staff_account: 'sale', is_active: true
   sale.add_role :sale
   sale.save!
 
-  accounting = Staff.new email: 'accounting@example.com', first_name: 'accounting', last_name: 'dave', employee_code: '0004', nickname: 'accountant', password: 'qwerty1234', staff_account: 'accounting'
+  accounting = Staff.new email: 'accounting@example.com', first_name: 'accounting', last_name: 'dave', employee_code: '0004', nickname: 'accountant', password: 'qwerty1234', staff_account: 'accounting', is_active: true
   accounting.add_role :accountant
   accounting.save!
 

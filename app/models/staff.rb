@@ -45,4 +45,8 @@ class Staff < ActiveRecord::Base
       where(conditions.to_h).first
     end
   end
+
+  def active_for_authentication?
+    super && self.is_active?
+  end
 end

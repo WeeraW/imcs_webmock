@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160822072341) do
+ActiveRecord::Schema.define(version: 20160908024858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -284,11 +284,11 @@ ActiveRecord::Schema.define(version: 20160822072341) do
   end
 
   create_table "staffs", force: :cascade do |t|
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -297,15 +297,16 @@ ActiveRecord::Schema.define(version: 20160822072341) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "employee_code",                       null: false
-    t.string   "first_name",                          null: false
-    t.string   "last_name",                           null: false
+    t.string   "employee_code",                          null: false
+    t.string   "first_name",                             null: false
+    t.string   "last_name",                              null: false
     t.string   "nickname"
     t.string   "email"
-    t.string   "staff_account",                       null: false
+    t.string   "staff_account",                          null: false
     t.json     "tokens"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "is_active",              default: false
     t.index ["email"], name: "index_staffs_on_email", unique: true, using: :btree
     t.index ["employee_code"], name: "index_staffs_on_employee_code", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_staffs_on_reset_password_token", unique: true, using: :btree
