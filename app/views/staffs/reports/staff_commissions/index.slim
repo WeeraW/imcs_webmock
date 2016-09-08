@@ -2,3 +2,4 @@ h4 ยอดคอมมิชชันจากการขาย #{ @begin_dat
 .callout
   = render 'staffs/shared/filters/calendar_range_form_tag', action_path: staffs_reports_staff_commissions_path, method: 'get'
   = render 'staff_commissions_table', staff_orders: @staff_orders
+  = paginate @staff_orders

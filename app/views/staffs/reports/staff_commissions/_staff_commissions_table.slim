@@ -21,4 +21,4 @@ table
             = (staff_order.created_orders.sum { |e| e.total_paid_reconciled }).to_s(:currency, locale: :th)
           td
             /! Need Helper
-            = staff_order.created_orders.sum { |e| e.total_paid_reconciled } * 0.015
+            = (staff_order.created_orders.sum { |e| e.total_paid_reconciled } * 0.015).to_s(:currency, locale: :th)

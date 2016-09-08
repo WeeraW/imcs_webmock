@@ -7,7 +7,8 @@
   = staff_form.input :nickname
   = staff_form.input :password
   = staff_form.input :password_confirmation
+  = staff_form.input :is_active, label: 'อนุญาตให้เข้าระบบ'
   .callout
-    h4 User Roles
+    h4 สิทธิ์การเข้าถึง
     = staff_form.collection_check_boxes :role_ids, Role.all, :id, :name
   = staff_form.button :submit, 'สร้างผู้ใช้ใหม่'
