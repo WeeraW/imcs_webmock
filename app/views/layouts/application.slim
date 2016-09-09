@@ -55,6 +55,10 @@ html
                 ul.menu
                   li
                     = link_to 'คอมมิชชันของ sale', staffs_reports_staff_commissions_path
+                  li
+                    = link_to 'ค่า Incentives', staffs_reports_incentives_path
+                  li
+                    = link_to 'KPI', staffs_reports_kpis_path
             li
               = link_to 'ออกจากระบบ', destroy_staff_session_path, method: :delete, id: 'staff_log_out'
         /! contents

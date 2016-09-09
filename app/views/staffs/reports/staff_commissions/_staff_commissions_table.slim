@@ -4,11 +4,15 @@ table
     th ชื่อ
     th นามสกุล
     th ยอดขายรวม
-    / th เปอร์เซ็นคอมมิชชัน
-    th คอมมิชชันที่ได้รับ
+    th ภาษี
+    th ยอดขายรวม(หลังหักภาษี)
+    th คอมมิชชันที่ได้รับ(1.5%)
   tbody
     - if staff_orders.any?
       - staff_orders.each do |staff_order|
+        - total_sale = staff_order.created_orders.sum { |e| e.total_paid_reconciled }
+        - vat = (total_sale * 7) / 107
+        - total_sale_reduced = total_sale - vat
         tr
           td
             = staff_order.try(:employee_code)
@@ -18,7 +22,11 @@ table
             = staff_order.try(:last_name)
           td
             /! Need Helper
-            = (staff_order.created_orders.sum { |e| e.total_paid_reconciled }).to_s(:currency, locale: :th)
+            = total_sale.to_s(:currency, locale: :th)
+          td
+            = vat.to_s(:currency, locale: :th)
+          td
+            =  total_sale_reduced.to_s(:currency, locale: :th)
           td
             /! Need Helper
-            = (staff_order.created_orders.sum { |e| e.total_paid_reconciled } * 0.015).to_s(:currency, locale: :th)
+            = (total_sale_reduced * 0.015).to_s(:currency, locale: :th)

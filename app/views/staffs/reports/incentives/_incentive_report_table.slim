@@ -1,0 +1,24 @@
+- total_sale = orders.sum(&:total_paid_reconciled)
+- vat = orders.sum(&:total_paid_reconciled) * 7 / 107
+- total_sale_reduced = total_sale - vat
+p
+| ยอดขายทั้งบริษัท: 
+= total_sale.to_s(:currency, locale: :th)
+p
+| ภาษี 7%: 
+= vat.round(2).to_s(:currency, locale: :th)
+p
+| ยอดขายหลังหักภาษี: 
+= total_sale_reduced.to_s(:currency, locale: :th)
+p
+| ค่า Incentive จากยอดขายหลังหักภาษี (0.5%): 
+= (total_sale_reduced * 0.005).to_s(:currency, locale: :th)
+/! table
+  thead
+    th รหัสพนักงาน
+    th ชื่อ
+    th นามสกุล
+    th คอมมิชชัน Incentive
+  tbody
+    
+/ = paginate staffs

@@ -1,0 +1,4 @@
+h4 รายงานค่า Incentive #{ l @begin_date, locale: :th } - #{ l @end_date, locale: :th }
+.callout
+  == render 'staffs/shared/filters/calendar_range_form_tag', action_path: staffs_reports_incentives_path, method: 'get', begin_date: @begin_date, end_date: @end_date
+  == render 'incentive_report_table', orders: @orders, staffs: @staffs
