@@ -11,7 +11,7 @@ class Payment::Detail < ApplicationRecord
   validates_attachment_file_name :payment_receipt_image_file, matches: [/png\Z/, /jpe?g\Z/]
 
   validates_attachment :payment_receipt_image_file,
-                       size: { in: 1..2000.kilobytes }
+                       size: { in: 1..2048.kilobytes }
 
   scope :pending_payments, -> { where status: :pending, approve_by: nil }
 
