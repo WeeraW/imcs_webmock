@@ -17,6 +17,9 @@ class Order::Order < ApplicationRecord
 
   before_validation :generate_billing_id
 
+  validates :order_details,
+            presence: true
+
   validates :billing_id,
             presence: true,
             uniqueness: {
