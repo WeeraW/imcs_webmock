@@ -2,17 +2,15 @@ tr
   td
     = payment.id
   td
-    = payment.pay_amount
+    = payment.pay_amount.to_s(:currency, locale: :th)
   td
     = payment.pay_datetime.in_time_zone('Bangkok').strftime('%d/%m/%Y %H:%M')
   td
     = "#{payment.create_by.first_name} #{payment.create_by.last_name}"
   td
-    = payment.company_bank_account.bank_branch.display_name
-  td
-    = payment.company_bank_account.bank_branch.bank.display_name
-  td
-    = payment.company_bank_account.code
+    | #{ payment.company_bank_account.bank_branch.bank.display_name }
+    |  สาขา #{ payment.company_bank_account.bank_branch.display_name }
+    |  เลขบัญชี #{ payment.company_bank_account.code }
   td
     - if payment.payment_receipt_image_file?
       a data-open=("payment_receipt_image#{payment.id}") ดูภาพ

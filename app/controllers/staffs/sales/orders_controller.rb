@@ -10,7 +10,8 @@ class Staffs::Sales::OrdersController < ApplicationController
   def new
     @order = Order::Order.new
     @order.order_details.new
-    @order.build_act_as_shippingable.build_fullfillment_shipping_address
+    @order.shipping_address = Fullfillment::ShippingAddress.new
+    # @order.build_act_as_shippingable.build_fullfillment_shipping_address
   end
 
   def create

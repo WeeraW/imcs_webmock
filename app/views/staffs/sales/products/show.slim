@@ -18,7 +18,7 @@
     p
       strong> ราคาล่าสุด:
       span>
-        = @product.latest_price
+        = @product.latest_price.to_s(:currency, locale: :th)
       strong> แก้ไขราคาโดย:
       span
         = @product.product_prices.last.create_by.first_name.capitalize

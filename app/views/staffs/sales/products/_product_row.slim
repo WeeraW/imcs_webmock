@@ -8,7 +8,7 @@ tr
   td
     = "#{product.last_editor.first_name} #{product.last_editor.last_name}"
   td
-    = product.latest_price
+    = product.latest_price.to_s(:currency, locale: :th)
   td
     = "#{product.product_prices.last.create_by.first_name} #{product.product_prices.last.create_by.last_name}"
   td

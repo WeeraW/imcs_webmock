@@ -2,8 +2,8 @@ tr
   td
     = price.id
   td
-    = price.price_th
+    = price.price_th.to_s(:currency, locale: :th)
   td
-    = price.created_at
+    = price.created_at.in_time_zone('Bangkok').strftime('%d/%m/%Y %H:%M')
   td
     = "#{price.create_by.first_name} #{price.create_by.last_name}"

@@ -9,11 +9,11 @@ tr
   td
     = "#{payment.create_by.first_name} #{payment.create_by.last_name}"
   td
-    = payment.pay_amount.to_s(:rounded, precision: 2)
+    = payment.pay_amount.to_s(:currency, locale: :th)
   td
-    = payment.pay_amount_reconciled.to_s(:rounded, precision: 2) unless payment.pay_amount_reconciled.nil?
+    = payment.pay_amount_reconciled.to_s(:currency, locale: :th) unless payment.pay_amount_reconciled.nil?
   td
-    = payment.pay_amount - payment.pay_amount_reconciled unless payment.pay_amount_reconciled.nil?
+    = (payment.pay_amount - payment.pay_amount_reconciled).to_s(:currency, locale: :th) unless payment.pay_amount_reconciled.nil?
   td
     = payment.pay_datetime.in_time_zone('Bangkok').strftime('%d/%m/%Y %H:%M')
   td
