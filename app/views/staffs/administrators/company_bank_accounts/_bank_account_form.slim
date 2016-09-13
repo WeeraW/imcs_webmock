@@ -1,0 +1,6 @@
+= simple_form_for bank_account, url: action_path, method: method do |bank_account_form|
+  = bank_account_form.input :code, label: 'เลขที่บัญชี'
+  = bank_account_form.input :display_name
+  = bank_account_form.label :accounting_bank_branch_id
+  = bank_account_form.select :accounting_bank_branch_id, Accounting::BankBranch.all.collect { |e| ["#{e.bank.display_name} สาขา#{e.display_name}", e.id] }
+  = bank_account_form.button :submit

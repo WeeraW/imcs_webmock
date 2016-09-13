@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160908024858) do
+ActiveRecord::Schema.define(version: 20160913023520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,7 @@ ActiveRecord::Schema.define(version: 20160908024858) do
     t.integer  "shipping_approve_by_staff_id"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.datetime "shipping_approved_at"
     t.index ["billing_id"], name: "index_order_orders_on_billing_id", unique: true, using: :btree
     t.index ["create_by_staff_id"], name: "index_order_orders_on_create_by_staff_id", using: :btree
     t.index ["paid_approve_by_staff_id"], name: "index_order_orders_on_paid_approve_by_staff_id", using: :btree

@@ -1,0 +1,18 @@
+h4 รายการบัญชีธนาคารของบริษัท
+= link_to 'เพิ่มบัญชีบริษัท', new_staffs_administrators_company_bank_account_path
+table
+  thead
+    th #
+    th รหัสบัญชี
+    th ชื่อที่แสดง
+    th สาขา
+    th ธนาคาร
+    th Operations
+  tbody
+    - if @bank_accounts.any?
+      - @bank_accounts.each do |bank_account|
+        == render 'bank_account_row', bank_account: bank_account
+    - else
+     tr
+       td colspan=5
+         h6 ไม่พบข้อมูลใดๆ 

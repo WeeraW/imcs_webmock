@@ -17,10 +17,13 @@ html
         - if !current_staff.nil?
           /! nav menu
           ul.dropdown.menu data-dropdown-menu=(true)
-            - if current_staff.has_role? :modorator
+            - if current_staff.has_role? :sale
               li
-                span
-                  = link_to 'เจ้าหน้าที่', staffs_administrators_staffs_path
+                = link_to('การขาย', staffs_sales_orders_path)
+              li
+                = link_to('ออเดอร์ที่จัดส่งแล้ว', staffs_sales_fullfilled_orders_path)
+              li
+                = link_to 'สินค้า', staffs_sales_products_path
             - if current_staff.has_role? :warehouse
               li
                 a การจัดส่งสินค้า
@@ -42,13 +45,6 @@ html
                 = link_to 'แจ้งโอนที่รอการตรวจสอบ', staffs_accountings_payments_path
               li
                 = link_to 'การแจ้งโอนที่ตรวจแล้ว', staffs_accountings_approved_payments_path
-            - if current_staff.has_role? :sale
-              li
-                = link_to('การขาย', staffs_sales_orders_path)
-              li
-                = link_to('ออเดอร์ที่จัดส่งแล้ว', staffs_sales_fullfilled_orders_path)
-              li
-                = link_to 'สินค้า', staffs_sales_products_path
             - if current_staff.has_role? :commission_report
               li
                 a รายงาน
@@ -59,6 +55,21 @@ html
                     = link_to 'ค่า Incentives', staffs_reports_incentives_path
                   li
                     = link_to 'KPI', staffs_reports_kpis_path
+            - if current_staff.has_role?(:modorator) || current_staff.has_role?(:administrator)
+              li
+                span
+                  = link_to 'เจ้าหน้าที่', staffs_administrators_staffs_path
+            li
+              a ตั้งต่าระบบ
+              - if current_staff.has_role? :create_company_bank
+                ul.menu
+                  li
+                    a ธนาคาร
+                    ul.menu
+                      li
+                        = link_to 'บัญชีธนาคารของบริษัท', staffs_administrators_company_bank_accounts_path
+                      li
+                        = link_to 'รายชื่อธนาคาร', staffs_administrators_banks_path
             li
               = link_to 'ออกจากระบบ', destroy_staff_session_path, method: :delete, id: 'staff_log_out'
         /! contents

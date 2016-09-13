@@ -1,0 +1,10 @@
+tr
+  td
+    = bank.id
+  td
+    = bank.code
+  td
+    = bank.display_name
+  td
+    = link_to '[แก้ไข]', edit_staffs_administrators_bank_path(bank)
+    = link_to '[สาขา]', staffs_administrators_bank_bank_branches_path(bank)

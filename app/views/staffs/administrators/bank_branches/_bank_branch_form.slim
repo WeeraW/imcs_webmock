@@ -1,0 +1,5 @@
+= simple_form_for bank_branch, url: action_path, method: method do |bank_branch_form|
+  = bank_branch_form.input :display_name
+  label for='accounting_bank_branch_accounting_bank_id' ธนาคาร
+  = bank_branch_form.select :accounting_bank_id, Accounting::Bank.where(['id <> ?', 0]).collect { |e| [e.display_name, e.id] }, { input_html: { required: true } }
+  = bank_branch_form.button :submit

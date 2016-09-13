@@ -1,0 +1,16 @@
+h4 รายชื่อสาขาใน #{ @bank.display_name }
+= link_to 'เพิ่มสาขาธนาคาร', new_staffs_administrators_bank_bank_branch_path
+table
+  thead
+    th #
+    th display_name
+    th Operations
+  tbody
+    - if @bank_branches.any?
+      - @bank_branches.each do |bank_branch|
+        == render 'bank_branch_row', bank: @bank, bank_branch: bank_branch
+    - else
+      tr
+        td colspan=3
+          h5 ไม่พบข้อมูล
+= paginate @bank_branches

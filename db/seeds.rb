@@ -12,7 +12,7 @@ supplier_default = Supplier::Supplier.create! id: 0, company_code: 'UNIDENTIFIED
 freight_provider_default = Freight::Provider.create! id: 0, name: 'UNIDENTIFIED'
 
 # Role Seeds
-roles = %w(modorator warehouse accountant sale commission_report)
+roles = %w(modorator warehouse accountant sale commission_report create_company_bank)
 roles.each do |role|
   Role.create!(name: role)
 end
@@ -26,7 +26,7 @@ bank_seeds = [
   { code: 'TMB', display_name: 'ธนาคารทหารไทย' },
   { code: 'SCB', display_name: 'ธนาคารไทยพาณิชย์' },
   { code: 'GSB', display_name: 'ธนาคารออมสิน' },
-  { code: 'ฺBACC', display_name: 'ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร' },
+  { code: 'BACC', display_name: 'ธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร' },
   { code: 'KKP', display_name: 'ธนาคารเกียรตินาคิน' },
   { code: 'TCAP', display_name: 'ธนาคารธนชาต' },
   { code: 'CIMBT', display_name: 'ธนาคารซีไอเอ็มบีไทย' },

@@ -1,0 +1,13 @@
+h4 รายชื่อธนาคาร
+= link_to 'เพิ่มธนาคาร', new_staffs_administrators_bank_path
+table
+  thead
+    th #
+    th code
+    th ชื่อที่แสดง
+    th Operations
+  tbody
+    - if @banks.any?
+      - @banks.each do |bank|
+        == render 'bank_row', bank: bank
+= paginate @banks

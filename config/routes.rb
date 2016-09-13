@@ -13,6 +13,10 @@ Rails.application.routes.draw do
     end
     namespace :administrators do
       resources :staffs, except: [:destroy]
+      resources :banks, except: [:destroy] do
+        resources :bank_branches, except: [:destroy]
+      end
+      resources :company_bank_accounts, except: [:destroy]
     end
     namespace :sales do
       resources :fullfilled_orders, only: [:index]

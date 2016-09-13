@@ -12,6 +12,6 @@
 
   .callout
     h6 ที่อยู่สำหรับจัดส่ง
-    = order_form.simple_fields_for :shipping_address, @order.build_act_as_shippingable.build_fullfillment_shipping_address do |address|
+    = order_form.simple_fields_for :shipping_address, @order.shipping_address do |address|
       = render 'staffs/shared/shipping_address_form', f: address
   = order_form.button :submit, 'สร้างออเดอร์ใหม่'
