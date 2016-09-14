@@ -2,7 +2,7 @@ class Staffs::Warehouses::SuppliersController < ApplicationController
   before_action :authenticate_staff!
   before_action :find_suppliers!, only: [:show, :edit, :update]
   def index
-    @suppliers = Supplier::Supplier.all
+    @suppliers = Supplier::Supplier.where(['id <> ?', 0]).page(params[:page]).per(params[:per_page])
   end
 
   def show
