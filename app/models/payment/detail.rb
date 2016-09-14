@@ -6,6 +6,7 @@ class Payment::Detail < ApplicationRecord
   belongs_to :create_by, class_name: 'Staff', foreign_key: :create_by_staff_id
   belongs_to :order, class_name: 'Order::Order', foreign_key: :order_order_id
   belongs_to :company_bank_account, class_name: 'Accounting::CompanyBankAccount', foreign_key: :accounting_company_bank_account_id
+  belongs_to :from_bank, class_name: 'Accounting::Bank', foreign_key: :from_bank_id
 
   validates_attachment_content_type :payment_receipt_image_file, content_type: /\Aimage/
   validates_attachment_file_name :payment_receipt_image_file, matches: [/png\Z/, /jpe?g\Z/]

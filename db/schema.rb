@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913023520) do
+ActiveRecord::Schema.define(version: 20160913065506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -233,7 +233,9 @@ ActiveRecord::Schema.define(version: 20160913023520) do
     t.integer  "payment_receipt_image_file_file_size"
     t.datetime "payment_receipt_image_file_updated_at"
     t.decimal  "pay_amount_reconciled",                   precision: 14, scale: 4
+    t.integer  "from_bank_id"
     t.index ["accounting_company_bank_account_id"], name: "index_payment_details_on_accounting_company_bank_account_id", using: :btree
+    t.index ["from_bank_id"], name: "index_from_bank_id_on_payment_datails", using: :btree
     t.index ["order_order_id"], name: "index_payment_details_on_order_order_id", using: :btree
   end
 
@@ -379,6 +381,7 @@ ActiveRecord::Schema.define(version: 20160913023520) do
   add_foreign_key "order_orders", "staffs", column: "create_by_staff_id", name: "fk_rails_order_creator_staff"
   add_foreign_key "order_orders", "staffs", column: "paid_approve_by_staff_id", name: "fk_rails_order_payment_approval_staff"
   add_foreign_key "order_orders", "staffs", column: "shipping_approve_by_staff_id", name: "fk_rails_order_shipping_approval_staff"
+  add_foreign_key "payment_details", "accounting_banks", column: "from_bank_id"
   add_foreign_key "payment_details", "accounting_company_bank_accounts"
   add_foreign_key "payment_details", "order_orders"
   add_foreign_key "payment_details", "staffs", column: "approve_by_staff_id", name: "fk_rails_payment_details_approval_staff"

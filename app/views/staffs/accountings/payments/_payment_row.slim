@@ -17,6 +17,8 @@ tr
   td
     = payment.pay_datetime.in_time_zone('Bangkok').strftime('%d/%m/%Y %H:%M')
   td
+    = payment.from_bank.display_name
+  td
     .tiny.reveal id=("payment_receipt_image#{payment.id}") data-reveal=true
       = image_tag payment.payment_receipt_image_file
     a data-open=("payment_receipt_image#{payment.id}") ดู

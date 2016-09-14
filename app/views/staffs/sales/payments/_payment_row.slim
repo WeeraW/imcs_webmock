@@ -8,6 +8,8 @@ tr
   td
     = "#{payment.create_by.first_name} #{payment.create_by.last_name}"
   td
+    = payment.from_bank.display_name
+  td
     | #{ payment.company_bank_account.bank_branch.bank.display_name }
     |  สาขา #{ payment.company_bank_account.bank_branch.display_name }
     |  เลขบัญชี #{ payment.company_bank_account.code }

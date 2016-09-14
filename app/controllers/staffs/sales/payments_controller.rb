@@ -48,6 +48,6 @@ class Staffs::Sales::PaymentsController < ApplicationController
   end
 
   def payment_params
-    params.fetch(:payment_detail).permit(:pay_amount, :pay_datetime, :note, :accounting_company_bank_account_id, :payment_receipt_image_file)
+    params.fetch(:payment_detail).permit(:pay_amount, :pay_datetime, :note, :accounting_company_bank_account_id, :payment_receipt_image_file, :from_bank_id)
   end
 end
