@@ -12,7 +12,7 @@ supplier_default = Supplier::Supplier.create! id: 0, company_code: 'UNIDENTIFIED
 freight_provider_default = Freight::Provider.create! id: 0, name: 'UNIDENTIFIED'
 
 # Role Seeds
-roles = %w(modorator warehouse accountant sale commission_report create_company_bank)
+roles = %w(modorator warehouse accountant sale commission_report create_company_bank create_freight_provider)
 roles.each do |role|
   Role.create!(name: role)
 end

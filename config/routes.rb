@@ -12,11 +12,12 @@ Rails.application.routes.draw do
       resources :incentives, only: [:index]
     end
     namespace :administrators do
-      resources :staffs, except: [:destroy]
-      resources :banks, except: [:destroy] do
-        resources :bank_branches, except: [:destroy]
+      resources :freight_providers, except: [:show, :destroy]
+      resources :staffs, except: [:show, :destroy]
+      resources :banks, except: [:show, :destroy] do
+        resources :bank_branches, except: [:show, :destroy]
       end
-      resources :company_bank_accounts, except: [:destroy]
+      resources :company_bank_accounts, except: [:show, :destroy]
     end
     namespace :sales do
       resources :fullfilled_orders, only: [:index]

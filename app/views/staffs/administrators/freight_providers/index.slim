@@ -1,0 +1,17 @@
+h4 รายชื่อตัวแทนจัดส่งสินค้า
+= link_to 'เพิ่มตัวแทนจัดส่งสินค้า', new_staffs_administrators_freight_provider_path
+table
+  thead
+    th #
+    th Name
+    th Telephone Number
+    th Fax Number
+    th Operations
+  tbody
+    - if @freight_providers.any?
+      - @freight_providers.each do |freight_provider|
+        == render 'freight_provider_row', freight_provider: freight_provider
+    - else
+      tr
+        td colspan=4
+          h5 ไม่พบข้อมูล

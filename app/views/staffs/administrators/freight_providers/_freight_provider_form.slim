@@ -1,0 +1,7 @@
+= simple_form_for freight_provider, url: action_path, method: method do |freight_provider_form|
+  - freight_provider.errors.full_messages.each do |message|
+    = render 'staffs/shared/error_alert', error_message: message
+  = freight_provider_form.input :name
+  = freight_provider_form.input :telephone_number, as: :tel
+  = freight_provider_form.input :fax_number
+  = freight_provider_form.button :submit
