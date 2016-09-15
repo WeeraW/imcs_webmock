@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       resources :products, only: [:index, :show, :new, :create, :edit, :update]
     end
     namespace :warehouses do
+      get 'inventory_movements_reports/inventory_movements', 'inventory_movements_reports#inventory_movements'
       resources :approved_shipping_orders, only: [:index]
       resources :inventory_movements, only: [:create]
       resources :shipping_addresses, only: [:update]

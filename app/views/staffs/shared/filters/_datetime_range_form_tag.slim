@@ -1,0 +1,12 @@
+#datetime-range-form
+  = form_tag action_path, method: 'get' do
+    .row
+      .large-5.small-12.columns
+        label เริ่มต้น*
+        = datetime_field_tag 'begin_date', nil, required: true, value: begin_date, max: end_date, id: 'filter-begin-date'
+      .large-5.small-12.columns
+        label สิ้นสุด*
+        = datetime_field_tag 'end_date', nil, required: true, value: end_date, min: begin_date, id: 'filter-end-date'
+      .large-2.small-12.columns
+        .button-group style='padding-top: 1.5rem'
+          = submit_tag 'ค้นหา', class: 'expanded button'

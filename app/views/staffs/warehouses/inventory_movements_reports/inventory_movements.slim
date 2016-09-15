@@ -1,0 +1,40 @@
+h4 รายงานการเคลื่อนไหวของสินค้า #{@begin_date.strftime('%d/%m/%Y %H:%M')} - #{@end_date.strftime('%d/%m/%Y %H:%M')}
+/ == render 'staffs/shared/filters/datetime_range_form_tag', action_path: staffs_warehouses_inventory_movements_reports_inventory_movements_path, begin_date: @begin_date, end_date: @end_date
+#datetime-range-form
+  = form_tag staffs_warehouses_inventory_movements_reports_inventory_movements_path, method: 'get' do
+    .row
+      / .large-3.small-12.columns
+        label สินค้าในสต็อก
+        = select_tag :inventory_item_id, options_from_collection_for_select(Inventory::InventoryItem.all, 'id', 'display_name')
+      .large-3.small-12.columns
+        label เริ่มต้น*
+        = datetime_field_tag 'begin_date', nil, required: true, value: @begin_date, max: @end_date, id: 'filter-begin-date'
+      .large-3.small-12.columns
+        label สิ้นสุด*
+        = datetime_field_tag 'end_date', nil, required: true, value: @end_date, min: @begin_date, id: 'filter-end-date'
+      .large-2.small-12.columns
+        .button-group style='padding-top: 1.5rem'
+          = submit_tag 'ค้นหา', class: 'expanded button'
+  table
+    thead
+      th สินค้า
+      th หมายเลขล็อต
+      th จำนวน
+      th จากออเดอร์
+    tbody
+      - if @inventory_movements.any?
+        - @inventory_movements.each do |inventory_movement|
+          tr
+            td
+              = inventory_movement.inventory_item_lot.inventory_item.display_name
+            td
+              = inventory_movement.inventory_item_lot.lot_number
+            td
+              = inventory_movement.quantity if inventory_movement.class.eql? Inventory::ItemLotStockIn
+              = "-#{inventory_movement.quantity}" if inventory_movement.class.eql? Inventory::ItemLotStockOut
+            td
+              = inventory_movement.order_detail.order.billing_id if inventory_movement.class.eql? Inventory::ItemLotStockOut
+      - else
+        tr
+          td colspan=4
+            h5 ไม่พบข้อมูล
