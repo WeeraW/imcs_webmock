@@ -12,7 +12,7 @@ class Inventory::ItemLotStockIn < ApplicationRecord
             }
 
   validates :price_per_count,
-            allow_nil: true,
+            allow_blank: true,
             numericality: {
               greater_than_or_equal_to: 0.0000,
               less_than_or_equal_to: 100_000_000.0000

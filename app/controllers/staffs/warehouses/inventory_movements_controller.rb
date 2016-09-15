@@ -35,7 +35,7 @@ class Staffs::Warehouses::InventoryMovementsController < ApplicationController
 
   def shipping_approve!(order)
     order.shipping_approve_by = current_staff
-    order.shipping_approved_at = Datetime.now.utc
+    order.shipping_approved_at = DateTime.now.utc
     order.save!
   end
 
