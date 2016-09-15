@@ -18,9 +18,8 @@ class Staffs::Warehouses::SuppliersController < ApplicationController
   end
 
   def update
-  end
-
-  def destroy
+    @supplier.update(supplier_params)
+    render_or_redirect_to_index_after_save
   end
 
   private
