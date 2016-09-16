@@ -5,10 +5,7 @@ class Staffs::Sales::ProductsController < ApplicationController
     @products = Product::Product.page(params[:page]).per(params[:per_page])
   end
 
-  def show
-    puts '#' * 50, Inventory::InventoryItem.all.inspect, @product.contains.inspect
-    puts @product.contains.collect { |e| puts e.inspect, e.inventory_item.inspect }
-  end
+  def show; end
 
   def new
     @product = Product::Product.new
@@ -24,8 +21,7 @@ class Staffs::Sales::ProductsController < ApplicationController
     render_or_redirect_on_save
   end
 
-  def update
-  end
+  def update; end
 
   def destroy
   end
