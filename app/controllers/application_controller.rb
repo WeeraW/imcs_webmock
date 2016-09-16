@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, with: :render_not_found
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
-  def render_not_found
+  def render_not_found(exception = nil)
+    logger.info "Exception: #{exception.class}  Exception message: #{exception.message}" if exception
     respond_to do |format|
       format.html { render template: 'errors/page_not_found', status: 404 }
     end
