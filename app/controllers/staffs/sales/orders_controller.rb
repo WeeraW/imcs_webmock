@@ -2,7 +2,9 @@ class Staffs::Sales::OrdersController < ApplicationController
   before_action :authenticate_staff!
   before_action :find_orders!, only: [:show, :edit, :update]
   def index
+    @search_billing_id_expression = params['search_billing_id'].blank? ? nil : "%#{params['search_billing_id']}%"
     @orders = Order::Order.includes(order_details: [:product]).where(create_by: current_staff, shipping_approve_by: nil).page(params[:page]).per(params[:per_page])
+    @orders = @orders.where(['billing_id LIKE ?', @search_billing_id_expression]) unless @search_billing_id_expression.nil?
   end
 
   def show; end

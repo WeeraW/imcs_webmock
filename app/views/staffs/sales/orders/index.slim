@@ -1,4 +1,9 @@
 = link_to 'สร้างออเดอร์ใหม่', new_staffs_sales_order_path
+= form_tag staffs_sales_orders_path, method: 'get' do
+  .input-group
+    = search_field_tag :search_billing_id, nil, placeholder: 'ค้นหาด้วย Billing ID', class: 'input-group-field'
+    .input-group-button
+      = submit_tag 'ค้นหา', class: 'button'
 .callout
   table
     thead
