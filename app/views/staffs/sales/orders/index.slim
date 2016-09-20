@@ -1,4 +1,5 @@
-= link_to 'สร้างออเดอร์ใหม่', new_staffs_sales_order_path
+= link_to '[ขายสินค้า] ', new_staffs_sales_order_path if current_staff.has_role? :sale
+= link_to '[สร้างออเดอร์ใหม่]', new_staffs_sales_create_order_path if current_staff.has_role? :create_order
 = form_tag staffs_sales_orders_path, method: 'get' do
   .input-group
     = search_field_tag :search_billing_id, nil, placeholder: 'ค้นหาด้วย Billing ID', class: 'input-group-field'
@@ -10,6 +11,7 @@
       th #
       th Billing ID
       th ราคารวม
+      th ขายโดย
       th สร้างโดย
       th รับชำระเงินโดย
       th จัดส่งโดย

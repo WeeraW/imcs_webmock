@@ -13,6 +13,8 @@ class Staff < ActiveRecord::Base
 
   has_many :created_distributors, class_name: 'Distributor', foreign_key: :staff_creator_id, dependent: :restrict_with_exception
 
+  has_many :sale_orders, class_name: 'Order::Order', foreign_key: :sale_by_staff_id, inverse_of: :sale_by
+
   has_many :created_orders, class_name: 'Order::Order', foreign_key: :create_by_staff_id, inverse_of: :create_by
 
   validates :first_name,

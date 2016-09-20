@@ -1,25 +1,17 @@
-class Staffs::Sales::OrdersController < ApplicationController
+class Staffs::Sales::CreateOrdersController < ApplicationController
   before_action :authenticate_staff!
-  before_action :find_orders!, only: [:show, :edit, :update]
-  def index
-    @search_billing_id_expression = params['search_billing_id'].blank? ? nil : "%#{params['search_billing_id']}%"
-    @orders = Order::Order.includes(order_details: [:product]).where(create_by: current_staff, shipping_approve_by: nil).page(params[:page]).per(params[:per_page])
-    @orders = @orders.where(['billing_id LIKE ?', @search_billing_id_expression]) unless @search_billing_id_expression.nil?
-  end
-
-  def show; end
-
+  before_action :find_orders, only: [:edit, :update]
   def new
     @order = Order::Order.new
     @order.order_details.new
+    @order.payment_details.new
     @order.shipping_address = Fullfillment::ShippingAddress.new
-    # @order.build_act_as_shippingable.build_fullfillment_shipping_address
   end
 
   def create
     @order = Order::Order.new(order_params)
     create_shipping_address
-    set_sale_by
+    set_payment_create_by
     set_create_by
     render_or_redirect_save
   end
@@ -31,9 +23,11 @@ class Staffs::Sales::OrdersController < ApplicationController
     render_or_redirect_on_save
   end
 
-  def destroy; end
-
   private
+
+  def set_payment_create_by
+    @order.payment_details.first.create_by = current_staff
+  end
 
   def create_shipping_address
     @order.shipping_address = Fullfillment::ShippingAddress.new address_params[:shipping_address_attributes]
@@ -61,12 +55,12 @@ class Staffs::Sales::OrdersController < ApplicationController
     @order.create_by = current_staff
   end
 
-  def set_sale_by
-    @order.sale_by_staff = current_staff
-  end
-
   def order_params
-    params.fetch(:order_order).permit(order_details_attributes: [:product_product_id, :quantity, :_destroy])
+    params.fetch(:order_order).permit(
+      :sale_by_staff_id,
+      order_details_attributes: [:product_product_id, :quantity, :_destroy],
+      payment_details_attributes: [:pay_amount, :pay_datetime, :payment_detail_from_bank_id, :from_bank_id, :accounting_company_bank_account_id, :payment_receipt_image_file, :note]
+    )
   end
 
   def address_params

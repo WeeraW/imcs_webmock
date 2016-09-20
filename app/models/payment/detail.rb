@@ -4,7 +4,7 @@ class Payment::Detail < ApplicationRecord
   has_attached_file :payment_receipt_image_file
   belongs_to :approve_by, class_name: 'Staff', foreign_key: :approve_by_staff_id, optional: true
   belongs_to :create_by, class_name: 'Staff', foreign_key: :create_by_staff_id
-  belongs_to :order, class_name: 'Order::Order', foreign_key: :order_order_id
+  belongs_to :order, class_name: 'Order::Order', foreign_key: :order_order_id, optional: true
   belongs_to :company_bank_account, class_name: 'Accounting::CompanyBankAccount', foreign_key: :accounting_company_bank_account_id
   belongs_to :from_bank, class_name: 'Accounting::Bank', foreign_key: :from_bank_id
 
@@ -32,7 +32,8 @@ class Payment::Detail < ApplicationRecord
             presence: true
   validates :note,
             length: {
-              maximum: 300
+              maximum: 300,
+              allow_blank: true
             }
 
   def reject(staff)

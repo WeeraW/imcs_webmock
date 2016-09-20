@@ -12,6 +12,8 @@ tr
   td
     = order.shipping_address.freight_tracking_code || 'ยังไม่ระบุ'
   td
+    = "#{order.sale_by.first_name} #{order.sale_by.last_name}"
+  td
     = "#{order.create_by.first_name} #{order.create_by.last_name}"
   td
     = "#{order.paid_approve_by.first_name} #{order.paid_approve_by.last_name}"

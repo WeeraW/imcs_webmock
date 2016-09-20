@@ -18,7 +18,7 @@ class Fullfillment::ShippingAddress < ApplicationRecord
   validates :recipient_telephone_number,
             length: {
               minimum: 9,
-              allow_nil: true
+              allow_blank: true
             },
             numericality: { only_integer: true }
   validates :address,

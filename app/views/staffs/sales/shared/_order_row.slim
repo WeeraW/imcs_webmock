@@ -10,6 +10,8 @@ tr
   td
     = order.total_price.to_s(:currency, locale: :th)
   td
+    = "#{order.sale_by.first_name} #{order.sale_by.last_name}"
+  td
     = "#{order.create_by.first_name} #{order.create_by.last_name}"
   td
     = "#{order.paid_approve_by.try(:first_name)} #{order.paid_approve_by.try(:last_name)}"

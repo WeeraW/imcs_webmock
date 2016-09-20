@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160913065506) do
+ActiveRecord::Schema.define(version: 20160920023623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -211,9 +211,11 @@ ActiveRecord::Schema.define(version: 20160913065506) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.datetime "shipping_approved_at"
+    t.integer  "sale_by_staff_id"
     t.index ["billing_id"], name: "index_order_orders_on_billing_id", unique: true, using: :btree
     t.index ["create_by_staff_id"], name: "index_order_orders_on_create_by_staff_id", using: :btree
     t.index ["paid_approve_by_staff_id"], name: "index_order_orders_on_paid_approve_by_staff_id", using: :btree
+    t.index ["sale_by_staff_id"], name: "index_order_orders_on_sale_by_staff_id", using: :btree
     t.index ["shipping_approve_by_staff_id"], name: "index_order_orders_on_shipping_approve_by_staff_id", using: :btree
   end
 
@@ -380,6 +382,7 @@ ActiveRecord::Schema.define(version: 20160913065506) do
   add_foreign_key "order_details", "product_products"
   add_foreign_key "order_orders", "staffs", column: "create_by_staff_id", name: "fk_rails_order_creator_staff"
   add_foreign_key "order_orders", "staffs", column: "paid_approve_by_staff_id", name: "fk_rails_order_payment_approval_staff"
+  add_foreign_key "order_orders", "staffs", column: "sale_by_staff_id"
   add_foreign_key "order_orders", "staffs", column: "shipping_approve_by_staff_id", name: "fk_rails_order_shipping_approval_staff"
   add_foreign_key "payment_details", "accounting_banks", column: "from_bank_id"
   add_foreign_key "payment_details", "accounting_company_bank_accounts"

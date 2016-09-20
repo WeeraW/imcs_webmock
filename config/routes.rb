@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resources :company_bank_accounts, except: [:show, :destroy]
     end
     namespace :sales do
+      resources :create_orders, except: [:index, :destroy]
       resources :fullfilled_orders, only: [:index]
       resources :orders, only: [:index, :show, :new, :create, :edit, :update] do
         resources :payments, only: [:index, :show, :new, :create, :edit, :update]

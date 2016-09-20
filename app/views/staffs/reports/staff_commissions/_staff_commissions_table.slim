@@ -10,7 +10,7 @@ table
   tbody
     - if staff_orders.any?
       - staff_orders.each do |staff_order|
-        - total_sale = staff_order.created_orders.sum { |e| e.total_paid_reconciled }
+        - total_sale = staff_order.sale_orders.sum { |e| e.total_paid_reconciled }
         - vat = (total_sale * 7) / 107
         - total_sale_reduced = total_sale - vat
         tr
