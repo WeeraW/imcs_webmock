@@ -18,3 +18,4 @@
 .rbenv-vars
 # Paperclip Attached file
 public/system
+public/assets
