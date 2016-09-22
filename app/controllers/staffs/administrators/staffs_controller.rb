@@ -51,7 +51,7 @@ class Staffs::Administrators::StaffsController < ApplicationController
   end
 
   def staff_params
-    params.fetch(:staff).permit(:employee_code, :email, :staff_account, :first_name, :last_name, :nickname)
+    params.fetch(:staff).permit(:employee_code, :email, :staff_account, :first_name, :last_name, :nickname, :password, :password_confirmation, :is_active)
   end
 
   def staff_roles_params
