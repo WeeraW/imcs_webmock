@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if current_staff.has_role? :warehouse
       staffs_warehouses_orders_path
-    elsif current_staff.has_role? :sale
+    elsif current_staff.has_role?(:sale) || current_staff.has_role?(:create_order)
       staffs_sales_orders_path
     elsif current_staff.has_role? :accountant
       staffs_accountings_payments_path
