@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       end
     end
     namespace :accountings do
+      resources :saler_orders, only: [:update]
       resources :payments, only: [:index, :edit, :update]
       resources :approved_payments, only: [:index, :edit, :update]
       resources :orders, only: [:index, :new, :create, :edit, :update]

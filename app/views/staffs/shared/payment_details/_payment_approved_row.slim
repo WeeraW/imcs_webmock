@@ -28,3 +28,6 @@ tr
     .tiny.reveal id=("payment_detail#{payment.id}") data-reveal=true
       == render 'staffs/shared/payment_details/payment_reconcile_form', payment: payment, action_path: staffs_accountings_payment_path(payment), method: 'put'
     a data-open=("payment_detail#{payment.id}") [กระทบยอด]
+    .tiny.reveal id=("order_saler_select#{payment.order.id}") data-reveal=true
+      == render 'staffs/shared/payment_details/saler_select_form', order: payment.order, action_path: staffs_accountings_saler_order_path(payment.order) , method: 'put'
+    a data-open=("order_saler_select#{payment.order.id}") [แก้ไขผู้ขายสินค้า]

@@ -1,0 +1,3 @@
+= simple_form_for order, url: action_path, method: method do |order_form|
+  = order_form.select :sale_by_staff_id, (Staff.where(is_active: true).select { |e| e.has_role? :sale }).collect { |staff| ["#{staff.first_name} #{staff.last_name} #{"(#{staff.nickname})"}", staff.id] }
+  = order_form.button :submit
