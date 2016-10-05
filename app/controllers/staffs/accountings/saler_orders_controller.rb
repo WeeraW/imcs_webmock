@@ -4,7 +4,6 @@ class Staffs::Accountings::SalerOrdersController < ApplicationController
 
   def update
     @order.update(sale_order_params)
-    byebug
     respond_on_update_success
   end
 
