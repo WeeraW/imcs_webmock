@@ -2,7 +2,7 @@ class Staffs::Accountings::PaymentsController < ApplicationController
   before_action :authenticate_staff!
   before_action :find_payment!, only: [:edit, :show, :update]
   def index
-    @payments = Payment::Detail.includes(order: [{ order_details: :product }]).pending_payments.page(params[:page]).per(params[:per_page])
+    @payments = Payment::Detail.includes(order: [{ order_details: :product }]).pending_payments.order('order_orders.billing_id ASC').page(params[:page]).per(params[:per_page])
   end
 
   def new; end
