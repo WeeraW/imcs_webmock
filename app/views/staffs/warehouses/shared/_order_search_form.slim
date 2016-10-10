@@ -1,0 +1,7 @@
+= form_tag action_path, method: method do
+  .row
+    .meduim-12.large-12.columns
+      .input-group
+        = search_field_tag :search_key, nil, class: 'input-group-field', placeholder: 'ค้นหาด้วยชื่อผู้รับ หรือ ชื่อผู้ขาย'
+        .input-group-button
+          = button_tag 'ค้นหา', class: 'button'

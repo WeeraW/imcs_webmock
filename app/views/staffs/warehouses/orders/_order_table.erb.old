@@ -1,0 +1,53 @@
+<table>
+  <thead>
+    <th>
+      select
+    </th>
+    <th>
+      Billing ID
+    </th>
+    <th>
+      ผู้รับ
+    </th>
+    <th>
+      เลข EMS
+    </th>
+    <th>
+      ผู้ขาย
+    </th>
+    <th>
+      ผู้สร้าง
+    </th>
+    <th>
+      ตรวจชำระเงินโดย
+    </th>
+    <th>
+      จัดส่งโดย
+    </th>
+    <th>
+      Operations
+    </th>
+  </thead>
+  <tbody>
+    <% if @orders.any? %>
+    <% @orders.each do |order| %>
+    <%= render 'staffs/warehouses/shared/order_row', order: order %>
+    <% end %>
+    <% else %>
+    <tr>
+      <td colspan="5">
+        <h5>ไม่มีข้อมูล</h5>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @orders %>
+<%= form_tag(staffs_warehouses_pdf_address_renders_path, method: 'get', id: 'print_address_label_form') do %>
+<div id="selected_order_for_print_address_ids">
+</div>
+<%= submit_tag 'พิมพ์ที่อยู่ผู้รับ', id: 'warehouse_print_address_labels_btn' %>
+<% end %>
+<br />
+<%= render 'staffs/warehouses/shared/allocate_inventory_and_print_form' if current_page?(controller: 'orders', action: 'index')%>
+<%= render 'staffs/warehouses/shared/print_billing_form' if controller_name.eql?('approved_shipping_orders') && action_name.eql?('index') %>

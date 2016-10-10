@@ -34,7 +34,8 @@ Rails.application.routes.draw do
       resources :shipping_addresses, only: [:update]
       get :pdf_address_renders, to: 'pdf_renders#address_labels', defaults: { format: 'pdf' }
       get :pdf_stock_render, to: 'pdf_renders#stock_receipts', defaults: { format: 'pdf' }
-      resources :orders, only: [:index, :show, :new, :create, :edit, :update]
+      get 'orders/search', to: 'orders#search'
+      resources :orders, only: [:index, :edit, :update]
       resources :suppliers, only: [:index, :show, :new, :create, :edit, :update]
       resources :inventories, only: [:index, :show, :new, :create, :edit, :update] do
         resources :item_lots, only: [:index, :show, :new, :create, :edit, :update]
