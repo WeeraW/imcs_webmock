@@ -1,11 +1,14 @@
 class Order::Order < ApplicationRecord
   attr_accessor :selected
 
+  enum status: { default: 0, canceled: 1 }
+
   include Shippingable
   belongs_to :create_by, class_name: 'Staff', foreign_key: :create_by_staff_id
   belongs_to :paid_approve_by, class_name: 'Staff', foreign_key: :paid_approve_by_staff_id, optional: true
   belongs_to :shipping_approve_by, class_name: 'Staff', foreign_key: :shipping_approve_by_staff_id, optional: true
   belongs_to :sale_by, class_name: 'Staff', foreign_key: :sale_by_staff_id
+  belongs_to :canceled_by, class_name: 'Staff', foreign_key: :canceled_by_staff_id, optional: true
   has_many :order_details, class_name: 'Order::Detail', foreign_key: :order_order_id
   has_many :payment_details, class_name: 'Payment::Detail', foreign_key: :order_order_id
 

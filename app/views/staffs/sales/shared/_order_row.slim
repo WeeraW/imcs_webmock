@@ -23,7 +23,14 @@ tr
     td
       = order.shipping_address.freight_provider.try(:name) || 'ยังไม่ระบุ'
   td
+    - if order.status.eql? 'default'
+      p ปกติ
+    - elsif order.status.eql? 'canceled'
+      p.alert ยกเลิก
+  td
     - if order.paid_approve_by.nil?
       /! = link_to '[**แก้ไขรายการสั่งซื้อ] '
       = link_to '[แจ้งโอนเงิน] ', new_staffs_sales_order_payment_path(order)
-    = link_to '[ประวัติการโอนเงิน]', staffs_sales_order_payments_path(order)
+    = link_to '[ประวัติการโอนเงิน] ', staffs_sales_order_payments_path(order)
+    - if order.paid_approve_by.nil? && order.canceled_by.nil?
+      = link_to '[ยกเลิก]', staffs_sales_order_path(order), method: 'delete', data: { confirm: "**หลังจากยกเลิกแล้วไม่สามารถย้อนกลับได้\nต้องการทำต่อหรือไม่" }

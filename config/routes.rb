@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     namespace :sales do
       resources :create_orders, except: [:index, :destroy]
       resources :fullfilled_orders, only: [:index]
-      resources :orders, only: [:index, :show, :new, :create, :edit, :update] do
+      resources :orders do
         resources :payments, only: [:index, :show, :new, :create, :edit, :update]
       end
       resources :products, only: [:index, :show, :new, :create, :edit, :update]

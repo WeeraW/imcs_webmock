@@ -1,6 +1,6 @@
 class Staffs::Sales::OrdersController < ApplicationController
   before_action :authenticate_staff!
-  before_action :find_orders!, only: [:show, :edit, :update]
+  before_action :find_orders!, only: [:show, :edit, :update, :destroy]
   def index
     @search_billing_id_expression = params['search_billing_id'].blank? ? nil : "%#{params['search_billing_id']}%"
     @orders = Order::Order.includes(order_details: [:product]).where(create_by: current_staff, shipping_approve_by: nil).page(params[:page]).per(params[:per_page])
@@ -31,9 +31,19 @@ class Staffs::Sales::OrdersController < ApplicationController
     render_or_redirect_on_save
   end
 
-  def destroy; end
+  def destroy
+    cancel_order!
+    respond_to do |format|
+      format.html { redirect_back fallback_location: staffs_sales_orders_path }
+    end
+  end
 
   private
+
+  def cancel_order!
+    @order.canceled!
+    @order.update(canceled_by: current_staff, canceled_at: DateTime.now)
+  end
 
   def create_shipping_address
     @order.shipping_address = Fullfillment::ShippingAddress.new address_params[:shipping_address_attributes]
