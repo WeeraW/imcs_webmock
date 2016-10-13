@@ -29,3 +29,11 @@ $(document).on 'turbolinks:load', (event) ->
       $('#warehouse_print_address_labels_btn').attr('disabled', false)
       $('#warehouse_print_stock_cutter_recipe_btn').attr('disabled', false)
       $('#warehouse_print_billing_receipt_btn').attr('disabled', false)
+  $('#select_all_row').on 'change', (event) ->
+    if this.checked
+      for dom in $('.selected_order')
+        $(dom).prop('checked', true).change()
+        console.log $(dom).prop('checked')
+    else
+      for dom in $('.selected_order')
+        $(dom).prop('checked', false).change()
