@@ -21,7 +21,7 @@
         = @product.latest_price.to_s(:currency, locale: :th)
       strong> แก้ไขราคาโดย:
       span
-        = @product.product_prices.last.create_by.first_name.capitalize
+        = @product.product_prices.last.try(:create_by).try(:first_name)
     h6 ประวัติการตั้งราคา
     == render 'staffs/sales/prices/price_table', product_prices: @product.product_prices
     h6 สินค้าในเซต

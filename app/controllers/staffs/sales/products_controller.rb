@@ -23,8 +23,7 @@ class Staffs::Sales::ProductsController < ApplicationController
 
   def update; end
 
-  def destroy
-  end
+  def destroy; end
 
   private
 
@@ -39,6 +38,7 @@ class Staffs::Sales::ProductsController < ApplicationController
   end
 
   def add_product_price
+    return if product_price_params[:product_prices][:price_th].to_f == 0 || product_price_params[:product_prices][:price_th].blank?
     @product.product_prices.new.tap do |o|
       o.price_th = product_price_params[:product_prices][:price_th]
       o.create_by = current_staff
@@ -81,6 +81,6 @@ class Staffs::Sales::ProductsController < ApplicationController
   end
 
   def product_price_params
-    params.fetch(:product_product).permit(product_prices: [:price_th])
+    params.require(:product_product).permit(product_prices: [:price_th])
   end
 end
