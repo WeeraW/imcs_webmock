@@ -17,12 +17,24 @@ class Staffs::Administrators::StaffsController < ApplicationController
   def edit; end
 
   def update
-    @staff.update(staff_params)
+    @staff.update(update_staff_params)
+    update_password_if_password_provide
     create_roles
-    save_and_respond
+    if @staff.valid?
+      respond_to do |format|
+        format.html { redirect_to staffs_administrators_staffs_path }
+      end
+    else
+      render 'edit'
+    end
   end
 
   private
+
+  def update_password_if_password_provide
+    return if staff_params[:password].blank?
+    @staff.update(password_staff_params)
+  end
 
   def save_and_respond
     if @staff.save
@@ -48,6 +60,14 @@ class Staffs::Administrators::StaffsController < ApplicationController
 
   def find_staff!
     @staff = Staff.find(params[:id])
+  end
+
+  def password_staff_params
+    params.fetch(:staff).permit(:password, :password_confirmation)
+  end
+
+  def update_staff_params
+    params.fetch(:staff).permit(:employee_code, :email, :staff_account, :first_name, :last_name, :nickname, :is_active)
   end
 
   def staff_params
