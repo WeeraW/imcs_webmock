@@ -3,7 +3,7 @@ class Staffs::Administrators::StaffsController < ApplicationController
   before_action :find_staff!, only: [:edit, :update]
   before_action :new_staff, only: [:new]
   def index
-    @staffs = Staff.page(params[:page]).per(params[:per_page])
+    @staffs = Staff.order(:id).page(params[:page]).per(params[:per_page])
   end
 
   def new; end
