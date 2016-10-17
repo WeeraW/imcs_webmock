@@ -43,6 +43,7 @@ class Staffs::Warehouses::PdfRendersController < ApplicationController
                page_width: '95mm',
                page_height: '60mm',
                encoding: 'UTF-8',
+              #  show_as_html: true,
                margin: {
                  top: '0.15in',
                  bottom: '0.1in',

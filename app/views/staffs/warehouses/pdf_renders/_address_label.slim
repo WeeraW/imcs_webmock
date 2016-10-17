@@ -14,3 +14,9 @@
   span> โทร: #{ order.shipping_address.recipient_telephone_number }
   br
   span> บิลหมายเลข: #{ order.billing_id }
+  br
+  span style="font-size: 8pt;" สินค้า
+  br
+  - order.order_details.each do |order_detail|
+    span style='font-size: 8pt;' #{ order_detail.product.name_th } #{order_detail.quantity}
+  end
