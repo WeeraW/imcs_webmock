@@ -40,7 +40,7 @@ class Order::Order < ApplicationRecord
             }
 
   def self.fullfilled_orders_for_sale(sale_staff_id)
-    where ['create_by_staff_id = ? AND shipping_approve_by_staff_id IS NOT ?', sale_staff_id, nil]
+    where ['create_by_staff_id = ? OR sale_by_staff_id = ? AND shipping_approve_by_staff_id IS NOT ?', sale_staff_id, sale_staff_id, nil]
   end
 
   def self.shipping_approved(warehouse_staff_id)
