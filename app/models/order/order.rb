@@ -19,6 +19,10 @@ class Order::Order < ApplicationRecord
     sale_by: [:first_name, :last_name]
   }
 
+  pg_search_scope :search_by_full_name_or_billing_id, against: [:billing_id], associated_against: {
+    shipping_address: [:recipient_name]
+  }
+
   accepts_nested_attributes_for :payment_details
   accepts_nested_attributes_for :shipping_address
 
@@ -54,13 +58,6 @@ class Order::Order < ApplicationRecord
   def total_paid_reconciled
     payment_details.sum(:pay_amount_reconciled)
   end
-
-  # protected
-  #
-  # def build_client(params)
-  #   raise "Unknown client_type: #{client_type}" unless CLIENT_TYPES.include?(client_type)
-  #   self.client = client_type.constantize.new(params)
-  # end
 
   private
 

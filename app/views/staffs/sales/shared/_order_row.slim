@@ -17,7 +17,9 @@ tr
     = "#{order.paid_approve_by.try(:first_name)} #{order.paid_approve_by.try(:last_name)}"
   td
     = "#{order.shipping_approve_by.try(:first_name)} #{order.shipping_approve_by.try(:last_name)}"
-  - if controller_name.eql?('fullfilled_orders') && action_name.eql?('index')
+  - if controller_name.eql?('fullfilled_orders') && (action_name.eql?('index') || action_name.eql?('search'))
+    td
+      = order.shipping_address.recipient_name
     td
       = order.shipping_address.freight_tracking_code || 'ยังไม่ระบุ'
     td

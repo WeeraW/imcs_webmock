@@ -1,0 +1,5 @@
+= form_tag action_path, method: 'get' do
+  .input-group
+    = search_field_tag :search_key, nil, placeholder: 'ค้นหาด้วย Billing ID, ชื่อผู้รับ', class: 'input-group-field'
+    .input-group-button
+      = submit_tag 'ค้นหา', class: 'button'
