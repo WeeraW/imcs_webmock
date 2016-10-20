@@ -9,4 +9,21 @@ namespace :imcs do
     puts 'IMCS: Seed database!!'
   end
 
+  namespace :data do
+    desc 'Destroy all data seed Geo::Country data'
+    namespace :seed do
+      task geo_country: [:environment] do
+        require 'csv'
+        Geo::Country.destroy_all
+        File.open(Rails.root.to_s + '/db/data/geo_country.csv', 'r') do |file|
+          csv = CSV.new(file, headers: true)
+          while row = csv.shift
+            p row
+            Geo::Country.create! row.to_h
+          end
+        end
+      end
+    end
+  end
+
 end

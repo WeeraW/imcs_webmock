@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010072115) do
+ActiveRecord::Schema.define(version: 20161019061821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,21 @@ ActiveRecord::Schema.define(version: 20161010072115) do
     t.integer  "freight_provider_id"
     t.index ["freight_provider_id"], name: "index_fullfillment_shipping_addresses_on_freight_provider_id", using: :btree
     t.index ["freight_tracking_code"], name: "index_fullfillment_shipping_addresses_on_freight_tracking_code", using: :btree
+  end
+
+  create_table "geo_countries", force: :cascade do |t|
+    t.string   "iso_3166_a2_code"
+    t.string   "display_text_en"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "iso_3166_a3_code"
+    t.string   "iso_3166_n_code"
+    t.string   "itu_t_tel_code"
+    t.index ["display_text_en"], name: "index_geo_countries_on_display_text_en", unique: true, using: :btree
+    t.index ["iso_3166_a2_code"], name: "index_geo_countries_on_iso_3166_a2_code", unique: true, using: :btree
+    t.index ["iso_3166_a3_code"], name: "index_geo_countries_on_iso_3166_a3_code", unique: true, using: :btree
+    t.index ["iso_3166_n_code"], name: "index_geo_countries_on_iso_3166_n_code", unique: true, using: :btree
+    t.index ["itu_t_tel_code"], name: "index_geo_countries_on_itu_t_tel_code", using: :btree
   end
 
   create_table "inventory_act_as_countables", force: :cascade do |t|
