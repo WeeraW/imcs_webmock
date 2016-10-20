@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019061821) do
+ActiveRecord::Schema.define(version: 20161020061854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,8 +123,10 @@ ActiveRecord::Schema.define(version: 20161019061821) do
     t.datetime "updated_at",                 null: false
     t.string   "freight_tracking_code"
     t.integer  "freight_provider_id"
+    t.integer  "geo_country_id"
     t.index ["freight_provider_id"], name: "index_fullfillment_shipping_addresses_on_freight_provider_id", using: :btree
     t.index ["freight_tracking_code"], name: "index_fullfillment_shipping_addresses_on_freight_tracking_code", using: :btree
+    t.index ["geo_country_id"], name: "index_fullfillment_shipping_addresses_on_geo_country_id", using: :btree
   end
 
   create_table "geo_countries", force: :cascade do |t|
