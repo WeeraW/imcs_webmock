@@ -10,6 +10,14 @@ namespace :imcs do
   end
 
   namespace :data do
+    namespace :clean do
+      desc "Clean shipping address telephone number"
+      task shipping_addr_tel: [:environment] do
+        Fullfillment::ShippingAddress.in_batches.each_record do |record|
+          record.update(recipient_telephone_number: nil) if /\A0{9,}\z/ =~ record.recipient_telephone_number
+        end
+      end
+    end
     desc 'Destroy all data seed Geo::Country data'
     namespace :seed do
       task geo_country: [:environment] do
