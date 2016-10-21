@@ -21,7 +21,7 @@ class Fullfillment::ShippingAddress < ApplicationRecord
             format: {
               with: /\A(\+|\-)?[0-9]{9,}\z/,
               allow_blank: true
-            },
+            }
   validates :address,
             presence: true,
             length: {
