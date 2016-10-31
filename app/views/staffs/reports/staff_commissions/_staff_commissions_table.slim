@@ -8,25 +8,22 @@ table
     th ยอดขายรวม(หลังหักภาษี)
     th คอมมิชชันที่ได้รับ(1.5%)
   tbody
-    - if staff_orders.any?
-      - staff_orders.each do |staff_order|
-        - total_sale = staff_order.sale_orders.sum { |e| e.total_paid_reconciled }
-        - vat = (total_sale * 7) / 107
-        - total_sale_reduced = total_sale - vat
+    - if staff_total_sales.any?
+      - staff_total_sales.each do |staff_total_sale|
+        - vat = (staff_total_sale.total_sale * 7) / 107
+        - total_sale_reduced = staff_total_sale.total_sale - vat
         tr
           td
-            = staff_order.try(:employee_code)
+            = staff_total_sale.try(:employee_code)
           td
-            = staff_order.try(:first_name)
+            = staff_total_sale.try(:first_name)
           td
-            = staff_order.try(:last_name)
+            = staff_total_sale.try(:last_name)
           td
-            /! Need Helper
-            = total_sale.to_s(:currency, locale: :th)
+            = staff_total_sale.total_sale.to_s(:currency, locale: :th)
           td
             = vat.to_s(:currency, locale: :th)
           td
             =  total_sale_reduced.to_s(:currency, locale: :th)
           td
-            /! Need Helper
             = (total_sale_reduced * 0.015).to_s(:currency, locale: :th)

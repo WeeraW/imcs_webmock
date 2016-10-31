@@ -1,5 +1,6 @@
 h4 ยอดคอมมิชชันจากการขาย #{ @begin_date } - #{ @end_date }
 .callout
   = render 'staffs/shared/filters/calendar_range_form_tag', action_path: staffs_reports_staff_commissions_path, method: 'get', begin_date: @begin_date, end_date: @end_date
-  = render 'staff_commissions_table', staff_orders: @staff_orders
-  = paginate @staff_orders
+  = render 'staff_commissions_table', staff_total_sales: @staff_total_sales
+  = paginate @staff_total_sales
+  = console
