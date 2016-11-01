@@ -16,6 +16,7 @@ class Staffs::Reports::StaffCommissionsController < ApplicationController
            .group(:id)
            .where(['order_orders.paid_approve_by_staff_id IS NOT ?', nil])
            .where(['order_orders.paid_full_date BETWEEN ? AND ?', @begin_date, @end_date]).page(params[:page]).per(params[:per_page])
+           .order(:employee_code)
   end
 
   def respond_staff_comission_report
