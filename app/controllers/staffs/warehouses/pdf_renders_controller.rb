@@ -1,18 +1,24 @@
 class Staffs::Warehouses::PdfRendersController < ApplicationController
   before_action :authenticate_staff!
-  before_action :find_orders!, only: [:address_labels, :stock_receipts]
+  # before_action :find_orders!, only: [:address_labels, :stock_receipts]
   def address_labels
+    find_orders
     respond_if_print_address
   end
 
   def stock_receipts
     @failed_allocate_order_billing_ids = params[:order_ids][:failed]
+    find_succeed_orders
     respond_if_print_stock_receipt
   end
 
   private
 
-  def find_orders!
+  def find_orders
+    @orders = Order::Order.includes(order_details: :product).where(id: params[:order_ids])
+  end
+
+  def find_succeed_orders
     @orders = Order::Order.includes(order_details: :product).where(id: params[:order_ids][:succeed])
   end
 
