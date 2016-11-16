@@ -8,6 +8,7 @@ class Staffs::Warehouses::InventoryMovementsController < ApplicationController
   def create
     flash['warning'] = []
     @succeed_allocate_order_ids = []
+    @failed_allocate_order_billing_ids = []
     @orders.each do |order|
       next unless order.shipping_approve_by.nil?
       allocated_item_lots_by_order_detail = inventory_allocate(order)
@@ -16,7 +17,10 @@ class Staffs::Warehouses::InventoryMovementsController < ApplicationController
         shipping_approve!(order)
         save_stock_out_and_stock_out_history!(allocated_item_lots_by_order_detail)
       else
-        flash['warning'].append("Inventory Items in storage is not enough for Billng ID: #{order.billing_id}")
+        @failed_allocate_order_billing_ids.append(order.billing_id)
+        warning_msg = "Inventory Items in storage is not enough for Billng ID: #{order.billing_id}"
+        flash['warning'].append(warning_msg)
+        logger.warn warning_msg
       end
     end
     redirect_to_render_order_receipt
@@ -78,7 +82,7 @@ class Staffs::Warehouses::InventoryMovementsController < ApplicationController
   end
 
   def redirect_to_render_order_receipt
-    redirect_to controller: 'pdf_renders', action: 'stock_receipts', order_ids: @succeed_allocate_order_ids
+    redirect_to controller: 'pdf_renders', action: 'stock_receipts', order_ids: { succeed: @succeed_allocate_order_ids, failed: @failed_allocate_order_billing_ids }
   end
 
   def find_orders!

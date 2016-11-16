@@ -6,13 +6,14 @@ class Staffs::Warehouses::PdfRendersController < ApplicationController
   end
 
   def stock_receipts
+    @failed_allocate_order_billing_ids = params[:order_ids][:failed]
     respond_if_print_stock_receipt
   end
 
   private
 
   def find_orders!
-    @orders = Order::Order.includes(order_details: :product).where(id: params[:order_ids])
+    @orders = Order::Order.includes(order_details: :product).where(id: params[:order_ids][:succeed])
   end
 
   def respond_if_print_stock_receipt
