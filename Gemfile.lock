@@ -108,6 +108,7 @@ GEM
       railties (>= 3.1.0)
       sass (>= 3.3.0, < 3.5)
       sprockets-es6 (>= 0.9.0)
+    get_process_mem (0.2.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     guard (2.14.0)
@@ -201,6 +202,9 @@ GEM
       method_source (~> 0.8.1)
       slop (~> 3.4)
     puma (3.4.0)
+    puma_worker_killer (0.0.7)
+      get_process_mem (~> 0.2)
+      puma (>= 2.7, < 4)
     rack (2.0.1)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -366,6 +370,7 @@ DEPENDENCIES
   pg (~> 0.18)
   pg_search
   puma (~> 3.0)
+  puma_worker_killer
   rails (~> 5.0.0)
   rails-i18n (~> 5.0.0)
   react-rails (~> 1.8.0)
