@@ -1,0 +1,22 @@
+table
+  thead
+    th ลำดับ
+    th ชื่อ-นามสกุล
+    th ที่อยู่
+    th เบอร์โทรศัพท์
+  tbody
+    - if customers.any?
+      - customers.each do |customer|
+        tr
+          td
+            = customer.id
+          td
+            = customer.recipient_name
+          td
+            = full_address(customer)
+          td
+            = customer.recipient_telephone_number
+    - else
+      tr
+        td colspan=(5)
+          h4 ไม่มีข้อมูล

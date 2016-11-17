@@ -1,0 +1,9 @@
+h4 รายชื่อลูกค้าทั้งหมด
+.container
+  p
+    strong> Export:
+    strong
+      = link_to '[Excel]', staffs_reports_customers_list_report_path + '.xlsx'
+= paginate @customers
+= render 'customers_table', customers: @customers
+= paginate @customers

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   namespace :staffs do
     namespace :reports do
+      resources :customers, only: [:index]
+      get 'customers_list_report', to: 'customers#customers_list_report'
       resources :kpis, only: [:index]
       resources :staff_commissions, only: [:index]
       resources :incentives, only: [:index]

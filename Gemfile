@@ -65,6 +65,9 @@ gem 'paperclip', '~> 5.0.0'
 gem 'wicked_pdf', '~> 1.0.6'
 gem 'wkhtmltopdf-binary'
 gem 'font-awesome-sass', '~> 4.6.2'
+gem 'rubyzip', '~> 1.1.0'
+gem 'axlsx', '2.1.0.pre'
+gem 'axlsx_rails'
 group :test, :development do
   gem 'faker'
   gem 'wdm', platforms: [:mingw, :mswin, :x64_mingw]

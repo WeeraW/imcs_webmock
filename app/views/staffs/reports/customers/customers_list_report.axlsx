@@ -1,0 +1,23 @@
+workbook = xlsx_package.workbook
+# define sheet style
+heading_1 = workbook.styles.add_style(sz: 18, b: true, alignment: { horizontal: :center })
+table_heading = workbook.styles.add_style(sz: 14, b: true, alignment: { horizontal: :center })
+row_element = workbook.styles.add_style(sz: 14)
+
+@customers.in_batches.each_with_index do |shipments_batch, batch_index|
+  workbook.add_worksheet(name: "รายการที่อยู่ลูกค้า #{batch_index}") do |sheet|
+    sheet.add_row ['รายชื่อลูกค้าทั้งหมด'], style: [heading_1], widths: 5
+    sheet.merge_cells 'A1:D1'
+    sheet.add_row ['#', 'ชื่อ-นามสกุล', 'ที่อยู่แบบเต็ม', 'เบอร์โทรศัพท์'], style: [table_heading, table_heading, table_heading, table_heading]
+
+    shipments_batch.each_with_index do |shipment_info, index|
+      sheet.add_row [
+        shipment_info.id, # Column A
+        shipment_info.recipient_name, # Column B
+        "#{shipment_info.address} #{shipment_info.district} #{shipment_info.state} #{shipment_info.postal_code}", # Column C
+        shipment_info.recipient_telephone_number # Column D
+      ], style: row_element, types: [nil, nil, nil, :string]
+    end
+    sheet.column_widths(10, 40, 100, 20)
+  end
+end
