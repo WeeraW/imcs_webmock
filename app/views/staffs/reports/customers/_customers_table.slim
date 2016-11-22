@@ -5,17 +5,17 @@ table
     th ที่อยู่
     th เบอร์โทรศัพท์
   tbody
-    - if customers.any?
-      - customers.each do |customer|
+    - if orders.any?
+      - orders.each do |order|
         tr
           td
-            = customer.id
+            = order.id
           td
-            = customer.recipient_name
+            = order.shipping_address.recipient_name
           td
-            = full_address(customer)
+            = full_address(order.shipping_address)
           td
-            = customer.recipient_telephone_number
+            = order.shipping_address.recipient_telephone_number
     - else
       tr
         td colspan=(5)

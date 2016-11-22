@@ -26,6 +26,8 @@ class Order::Order < ApplicationRecord
   accepts_nested_attributes_for :payment_details
   accepts_nested_attributes_for :shipping_address
 
+  scope :shipped, -> { where ['shipping_approve_by_staff_id IS NOT ?', nil] }
+
   scope :paid_full_orders, -> { where ['paid_approve_by_staff_id IS NOT ? AND shipping_approve_by_staff_id IS ?', nil, nil] }
 
   scope :today_orders, -> { where(created_at: DateTime.now.beginning_of_day..DateTime.now.end_of_day) }

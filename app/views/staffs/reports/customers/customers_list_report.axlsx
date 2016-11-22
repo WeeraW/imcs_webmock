@@ -4,20 +4,48 @@ heading_1 = workbook.styles.add_style(sz: 18, b: true, alignment: { horizontal: 
 table_heading = workbook.styles.add_style(sz: 14, b: true, alignment: { horizontal: :center })
 row_element = workbook.styles.add_style(sz: 14)
 
-@customers.in_batches.each_with_index do |shipments_batch, batch_index|
+@orders.in_batches.each_with_index do |orders_batch, batch_index|
   workbook.add_worksheet(name: "รายการที่อยู่ลูกค้า #{batch_index}") do |sheet|
     sheet.add_row ['รายชื่อลูกค้าทั้งหมด'], style: [heading_1], widths: 5
-    sheet.merge_cells 'A1:D1'
-    sheet.add_row ['#', 'ชื่อ-นามสกุล', 'ที่อยู่แบบเต็ม', 'เบอร์โทรศัพท์'], style: [table_heading, table_heading, table_heading, table_heading]
+    sheet.merge_cells 'A1:F1'
+    sheet.add_row [
+      '#', # Column A
+      'ชื่อ-นามสกุล', # Column B
+      'ที่อยู่แบบเต็ม', # Column C
+      'เบอร์โทรศัพท์', # Column D
+      'สินค้าที่ซื้อ', # Column E
+      'จำนวน' # Column F
+    ], style: [
+      table_heading,
+      table_heading,
+      table_heading,
+      table_heading,
+      table_heading,
+      table_heading
+    ]
 
-    shipments_batch.each_with_index do |shipment_info, index|
+    orders_batch.each_with_index do |order, index|
       sheet.add_row [
-        shipment_info.id, # Column A
-        shipment_info.recipient_name, # Column B
-        "#{shipment_info.address} #{shipment_info.district} #{shipment_info.state} #{shipment_info.postal_code}", # Column C
-        shipment_info.recipient_telephone_number # Column D
-      ], style: row_element, types: [nil, nil, nil, :string]
+        order.id, # Column A
+        order.shipping_address.recipient_name, # Column B
+        full_address(order.shipping_address), # Column C
+        order.shipping_address.recipient_telephone_number, # Column D
+        # order_details
+        order.order_details.first.product.name_th, # Column F
+        order.order_details.first.quantity # Column G
+      ], style: row_element, types: [nil, nil, nil, :string, nil, nil]
+      next if order.order_details.second.nil?
+      order.order_details[-2, order.order_details.count - 1].map do |order_detail|
+        sheet.add_row [
+          nil,
+          nil,
+          nil,
+          nil,
+          order_detail.product.name_th,
+          order_detail.quantity
+        ], style: row_element, types: [nil, nil, nil, :string, nil, nil]
+      end
     end
-    sheet.column_widths(10, 40, 100, 20)
+    sheet.column_widths(10, 40, 100, 20, 20, 20)
   end
 end

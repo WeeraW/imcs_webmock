@@ -4,6 +4,6 @@ h4 รายชื่อลูกค้าทั้งหมด
     strong> Export:
     strong
       = link_to '[Excel]', staffs_reports_customers_list_report_path + '.xlsx'
-= paginate @customers
-= render 'customers_table', customers: @customers
-= paginate @customers
+= paginate @orders
+= render 'customers_table', orders: @orders
+= paginate @orders

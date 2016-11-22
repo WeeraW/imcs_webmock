@@ -69,6 +69,7 @@ gem 'rubyzip', '~> 1.1.0'
 gem 'axlsx', '2.1.0.pre'
 gem 'axlsx_rails'
 group :test, :development do
+  gem 'thin'
   gem 'faker'
   gem 'wdm', platforms: [:mingw, :mswin, :x64_mingw]
   gem 'bullet'
