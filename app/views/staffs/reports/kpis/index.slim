@@ -14,5 +14,5 @@ h4 รายงานค่า KPI #{ l @begin_date, locale: :th } - #{ l @end_d
   | ยอดขายหลังหักภาษี: 
   = total_sale_reduced.to_s(:currency, locale: :th)
   p
-  | ค่า Incentive จากยอดขายหลังหักภาษี (1%): 
-  = (total_sale_reduced * 0.01).to_s(:currency, locale: :th)
+  | ค่า KPI จากยอดขายหลังหักภาษี (0.5%): 
+  = (total_sale_reduced * 0.005).to_s(:currency, locale: :th)
