@@ -1,7 +1,10 @@
 .nested-fields
   .row
     .field.large-4.columns
-      = f.select :product_product_id, Product::Product.all.collect { |e| ["#{e.sku} - #{e.name_th} #{e.latest_price}", e.id] }
+      = f.select :product_product_id,
+                 Product::Product.all.collect { |e| ["#{e.sku} - #{e.name_th} #{e.latest_price}", e.id] },
+                 {},
+                 class: 'product_detail_selected'
     .field.large-4.columns
       = f.input :quantity, as: :integer, input_html: { min: 1, max: 999, value: 1 }, label: false
     .field.large-4.columns

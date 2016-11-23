@@ -3,22 +3,23 @@
       - @order.errors.full_messages.each do |error_msg|
         = render 'staffs/shared/error_alert.slim', error_message: error_msg
   .callout
-    h6 ผู้ขาย
+    h5 ผู้ขาย
     = order_form.select :sale_by_staff_id, (Staff.all.select { |staff| staff.has_role? :sale }).collect { |e| ["#{e.first_name} #{e.last_name} (#{e.nickname})", e.id] }
+
   .callout
-    h6 รายการสินค้า
+    h5 รายการสินค้า
     #order_details
       = order_form.simple_fields_for :order_details do |detail|
         == render 'staffs/sales/orders/order_detail_fields', f: detail
-      = link_to_add_association 'เพิ่มสินค้า', order_form, :order_details, partial: 'staffs/sales/orders/order_detail_fields'
+    == link_to_add_association 'เพิ่มสินค้า', order_form, :order_details, partial: 'staffs/sales/orders/order_detail_fields', 'data-association-insertion-method': 'append', 'data-association-insertion-node': '#order_details'
 
   .callout
-    h6 ที่อยู่สำหรับจัดส่ง
+    h5 ที่อยู่สำหรับจัดส่ง
     = order_form.simple_fields_for :shipping_address, @order.shipping_address do |address|
       = render 'staffs/shared/shipping_address_form', f: address
   .callout
     / need refactoring!!
-    h6 การแจ้งโอน
+    h5 การแจ้งโอน
     = order_form.simple_fields_for :payment_details do |payment|
       = payment.input :pay_amount, as: :decimal, input_html: { min: 1, max: 999_999 }, label: 'จำนวนเงินที่โอน'
       = payment.input :pay_datetime, html5: true, as: 'datetime', label: 'วันเวลาที่โอน **รูปแบบ เดือน/วัน/ปี(ค.ศ.) ชั่วโมง:นาที (AM/PM)', input_html: { value: DateTime.now.strftime('%Y-%m-%dT%H:%M') }
